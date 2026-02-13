@@ -26,7 +26,7 @@
         
         /* --- Navigation --- */
         nav {
-            padding: 25px 8%;
+            padding: 15px 8%;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(15px);
             display: flex;
@@ -36,6 +36,17 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid #e2e8f0;
+        }
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 6px;
         }
         .logo { font-weight: 800; font-size: 1.6rem; color: var(--primary); letter-spacing: -1px; }
         .logo span { color: var(--accent); }
@@ -160,7 +171,10 @@
 <body>
 
     <nav>
-        <div class="logo">SSSV<span>HUNTERS</span></div>
+        <div class="logo-wrapper">
+            <img src="bg.jpg" alt="SSSV Hunters Logo" class="logo-img">
+            <div class="logo">SSSV<span>HUNTERS</span></div>
+        </div>
         <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary" style="padding: 12px 25px; font-size: 0.9rem;">Consult an Expert</a>
     </nav>
 
@@ -239,7 +253,7 @@ Industry Exposure</p>
                     <p style="opacity: 0.8; margin-bottom: 30px;">Every client is unique. We reject the "one-size-fits-all" approach and replace it with a 4-phase 
 
 customized engagement model designed for the US landscape.</p>
-                    <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary">Consult the Expert Now ...</a>
+                    <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary">Download Service Guide</a>
                 </div>
                 <div class="strategy-list">
                     <div class="strategy-item">
