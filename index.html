@@ -1,241 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SSSV Hunters | Talent & Hiring Advisory</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SSSV Hunters | Strategic Talent Advisory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a; /* Navy Dark */
+            --accent: #2563eb;  /* Professional Blue */
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+        }
 
-  <style>
-    :root {
-      --primary: #0f172a;
-      --blue: #2563eb;
-      --text: #111827;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-    }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
 
-    * {
-      box-sizing: border-box;
-    }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            background: var(--bg-light);
+            line-height: 1.6;
+        }
 
-    body {
-      margin: 0;
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background: #f8fafc;
-      line-height: 1.7;
-    }
+        /* Nav Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
+        }
 
-    /* ================= HEADER ================= */
-    header {
-      min-height: 90vh;
-      background:
-        linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)),
-        url("bg.jpg") center / cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
-    }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); }
 
-    header h1 {
-      font-size: 64px;
-      font-weight: 900;
-      margin-bottom: 20px;
-      color: #020617;
-    }
+        /* Hero Section */
+        header {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+            background: radial-gradient(circle at top right, #e2e8f0, #f8fafc);
+        }
 
-    header p {
-      max-width: 900px;
-      margin: auto;
-      font-size: 20px;
-      font-weight: 500;
-      color: #020617;
-    }
+        .hero-content { max-width: 850px; }
 
-    section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 90px 20px;
-    }
+        header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: var(--primary);
+        }
 
-    h2 {
-      font-size: 40px;
-      margin-bottom: 40px;
-      color: var(--blue);
-      text-align: center;
-    }
+        header p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 28px;
-    }
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-    .card {
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 36px;
-    }
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+        }
 
-    .card h3 {
-      margin-top: 0;
-      font-size: 22px;
-      color: #020617;
-    }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4); }
 
-    .card p {
-      font-size: 16px;
-      color: var(--muted);
-    }
+        /* Sections */
+        section { max-width: 1200px; margin: auto; padding: 100px 20px; }
+        h2 { font-size: 2.25rem; text-align: center; margin-bottom: 50px; color: var(--primary); }
 
-    /* ================= LOGOS ================= */
-    .logos {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
+        /* Grid Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
 
-    .logo-card {
-      height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-    }
+        .card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
 
-    .logo-card img {
-      max-width: 180px;
-      max-height: 90px;
-      object-fit: contain;
-    }
+        .card:hover { border-color: var(--accent); }
 
-    /* ================= FOOTER ================= */
-    footer {
-      text-align: center;
-      padding: 50px 20px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 14px;
-    }
+        .card h3 { font-size: 1.4rem; margin-bottom: 15px; }
 
-    a {
-      color: var(--blue);
-      text-decoration: none;
-    }
-  </style>
+        /* Logo Grid */
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            align-items: center;
+            opacity: 0.7;
+            filter: grayscale(1);
+        }
+
+        .logo-grid img { width: 100%; max-width: 140px; height: auto; margin: auto; }
+
+        /* Compliance Box */
+        .compliance-banner {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+
+        footer {
+            background: var(--primary);
+            color: #94a3b8;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <header>
-    <div>
-      <h1>SSSV Hunters</h1>
-      <p>
-        A premium talent & hiring advisory consultancy supporting structured,
-        ethical, and compliant recruitment for global opportunities.
-      </p>
-    </div>
-  </header>
+    <nav>
+        <div class="logo">SSSV Hunters</div>
+        <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px;">Contact Us</a>
+    </nav>
 
-  <!-- EXPERTISE -->
-  <section>
-    <h2>Our Expertise</h2>
+    <header>
+        <div class="hero-content">
+            <h1>Expert Talent Acquisition & Strategic Hiring.</h1>
+            <p>We provide ethical, ATS-optimized, and premium advisory services for global professionals seeking their next high-impact role.</p>
+            <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary">Book an Advisory Session</a>
+        </div>
+    </header>
 
-    <div class="grid">
-      <div class="card">
-        <h3>Talent Advisory</h3>
-        <p>Role alignment, profile assessment, and international hiring strategy.</p>
-      </div>
+    <section>
+        <h2>Our Strategic Expertise</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Global Talent Advisory</h3>
+                <p>Navigating international hiring landscapes with role alignment and profile positioning strategies.</p>
+            </div>
+            <div class="card">
+                <h3>Executive Optimization</h3>
+                <p>Crafting ATS-compliant resumes and high-authority LinkedIn profiles that get noticed by recruiters.</p>
+            </div>
+            <div class="card">
+                <h3>Pipeline Coordination</h3>
+                <p>End-to-end interview scheduling and coordination to ensure a seamless hiring experience.</p>
+            </div>
+        </div>
+    </section>
 
-      <div class="card">
-        <h3>Resume & LinkedIn Optimization</h3>
-        <p>ATS-aligned resumes and recruiter-focused LinkedIn positioning.</p>
-      </div>
+    <section style="background: #fff;">
+        <div style="max-width: 1200px; margin: auto; padding: 0 20px;">
+            <h2 style="font-size: 1.5rem; color: var(--text-muted);">Trusted Knowledge Partners</h2>
+            <div class="logo-grid">
+                <img src="teksystems.jpg" alt="Teksystems">
+                <img src="kommforce.jpg" alt="KommForce">
+                <img src="rose.jpg" alt="Rose International">
+                <img src="softtechers.jpg" alt="Softtechers">
+                <img src="tands.jpg" alt="T&S">
+                <img src="jgj.jpg" alt="JGJ">
+            </div>
+        </div>
+    </section>
 
-      <div class="card">
-        <h3>Interview Coordination</h3>
-        <p>Structured interview scheduling and hiring pipeline coordination.</p>
-      </div>
+    <section>
+        <h2>Compliance & Integrity</h2>
+        <div class="compliance-banner">
+            <p style="color: #991b1b; font-weight: 700; margin-bottom: 10px;">Strict Ethical Standard</p>
+            <p>SSSV Hunters operates under a strict code of ethics. We do not provide visa sponsorship, document alteration, or non-compliant hiring practices. Our focus is purely on legal, performance-based advisory.</p>
+        </div>
+    </section>
 
-      <div class="card">
-        <h3>Application Support</h3>
-        <p>Manual, compliant job application support with role relevance.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CLIENTS -->
-  <section>
-    <h2>Clients & Industry Associations</h2>
-
-    <div class="grid logos">
-      <div class="logo-card">
-        <img src="teksystems.jpg" alt="Teksystems">
-      </div>
-
-      <div class="logo-card">
-        <img src="kommforce.jpg" alt="KommForce Solutions">
-      </div>
-
-      <div class="logo-card">
-        <img src="rose.jpg" alt="Rose Internationals">
-      </div>
-
-      <div class="logo-card">
-        <img src="softtechers.jpg" alt="Softtechers Inc">
-      </div>
-
-      <div class="logo-card">
-        <img src="tands.jpg" alt="TandS Solutions">
-      </div>
-
-      <div class="logo-card">
-        <img src="jgj.jpg" alt="JGJ Infotech">
-      </div>
-    </div>
-
-    <p style="margin-top:30px; text-align:center; font-size:14px; color:#6b7280;">
-      Logos are displayed for professional reference only.  
-      No ownership, partnership, or employment claims are implied.
-    </p>
-  </section>
-
-  <!-- COMPLIANCE -->
-  <section>
-    <h2>Compliance & Ethics</h2>
-
-    <div class="card">
-      <p style="color:#dc2626; font-weight:600;">
-        ❌ We do not provide visa services, document manipulation,
-        impersonation, or any illegal hiring practices.
-      </p>
-      <p>
-        All services are strictly limited to legal, ethical, and compliant
-        recruitment advisory and coordination support.
-      </p>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section>
-    <h2>Contact</h2>
-
-    <div class="card">
-      <p>Email: <a href="mailto:sssvhunters@gmail.com">sssvhunters@gmail.com</a></p>
-      <p>Website: sssvhunters.com</p>
-      <p><em>Engagement fees are discussed after initial consultation.</em></p>
-    </div>
-  </section>
-
-  <footer>
-    © 2026 SSSV Hunters. All rights reserved.<br>
-    Talent advisory & hiring support. No job guarantees.
-  </footer>
+    <footer>
+        <p>© 2026 SSSV Hunters. Global Talent Advisory Consultancy.</p>
+        <p style="font-size: 12px; margin-top: 20px;">No job guarantees are implied. Fees are based on advisory time and expertise.</p>
+    </footer>
 
 </body>
 </html>
-
-
