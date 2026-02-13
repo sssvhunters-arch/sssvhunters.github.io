@@ -7,236 +7,235 @@
 
   <style>
     :root {
-      --primary: #0f5fd6;
-      --text: #0f172a;
-      --muted: #475569;
+      --primary: #0f172a;
+      --blue: #2563eb;
+      --text: #111827;
+      --muted: #6b7280;
       --border: #e5e7eb;
-      --panel: rgba(255,255,255,0.95);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      font-family: "Inter", Arial, Helvetica, sans-serif;
+      font-family: Inter, Arial, Helvetica, sans-serif;
       color: var(--text);
-      line-height: 1.8;
-      background:
-        linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0.55)),
-        url("assets/bg.jpg") center/cover no-repeat fixed;
+      background: #f8fafc;
+      line-height: 1.7;
     }
 
+    /* ================= HEADER ================= */
     header {
-      position: relative
-      padding: 120px 20px;
-      text-align: center;
+      min-height: 90vh;
       background:
-        linear-gradient(
-          rgba(2,6,23,0.75),
-          rgba(2,6,23,0.75)
-         ),
-         url("bg.jpg");
-       background-size:cover;
-       background -position:center;
-       background-repeat:no-repeat; 
+        linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)),
+        url("bg.jpg") center / cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
     }
 
     header h1 {
-      font-size: 58px;
-      font-weight:800;
-      letter-spacing:1px
+      font-size: 64px;
+      font-weight: 900;
       margin-bottom: 20px;
-      color:#e0f2fe;
-      text-shadow:0 6px 25px rgba(0,0,0,0.6);
+      color: #020617;
     }
 
     header p {
       max-width: 900px;
       margin: auto;
       font-size: 20px;
-      color:#cbd5f5;
-      text-shadow:0 2px 10px rgba(0,0,0,0.5);
+      font-weight: 500;
+      color: #020617;
     }
-    
-    head::after{
-      content:"";
-      position:absolute;
-      inset: 0;
-      background:rgba(2,6,23,0.25);
-    }
-
-    header > * {
-      position:relative;
-      z-index: 1;
-    }
-
 
     section {
       max-width: 1200px;
       margin: auto;
-      padding: 110px 20px;
+      padding: 90px 20px;
     }
 
     h2 {
       font-size: 40px;
-      color: var(--primary);
-      margin-bottom: 45px;
+      margin-bottom: 40px;
+      color: var(--blue);
       text-align: center;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 32px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
     }
 
     .card {
-      background: var(--panel);
-      padding: 45px;
-      border-radius: 18px;
+      background: #ffffff;
       border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
     }
 
     .card h3 {
       margin-top: 0;
-      font-size: 26px;
+      font-size: 22px;
       color: #020617;
     }
 
     .card p {
-      font-size: 18px;
+      font-size: 16px;
       color: var(--muted);
     }
 
-    /* CLIENT LOGOS – BIG & PREMIUM */
-    .clients {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 50px;
-      align-items: center;
+    /* ================= LOGOS ================= */
+    .logos {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
-    .client-box {
+    .logo-card {
+      height: 180px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 35px;
-      background: var(--panel);
+      justify-content: center;
+      background: #ffffff;
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 16px;
     }
 
-    .client-box img {
-      max-height: 80px;
-      max-width: 220px;
+    .logo-card img {
+      max-width: 180px;
+      max-height: 90px;
       object-fit: contain;
-      filter: grayscale(100%);
-      opacity: 0.9;
     }
 
-    .note {
-      color: #b91c1c;
-      font-weight: 600;
-      font-size: 18px;
-    }
-
+    /* ================= FOOTER ================= */
     footer {
       text-align: center;
-      padding: 60px 20px;
+      padding: 50px 20px;
       border-top: 1px solid var(--border);
       color: var(--muted);
-      font-size: 16px;
-      background: rgba(255,255,255,0.97);
+      font-size: 14px;
     }
 
     a {
-      color: var(--primary);
+      color: var(--blue);
       text-decoration: none;
     }
   </style>
 </head>
 <body>
 
-<!-- HERO -->
-<header>
-  <h1>SSSV Hunters</h1>
-  <p>
-    A premium talent & hiring advisory consultancy supporting
-    structured, ethical, and compliant recruitment for global opportunities.
-  </p>
-</header>
-
-<!-- SERVICES -->
-<section>
-  <h2>Our Expertise</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Talent Advisory</h3>
-      <p>Deep profile evaluation, role alignment, and international hiring strategy.</p>
+  <!-- HERO -->
+  <header>
+    <div>
+      <h1>SSSV Hunters</h1>
+      <p>
+        A premium talent & hiring advisory consultancy supporting structured,
+        ethical, and compliant recruitment for global opportunities.
+      </p>
     </div>
-    <div class="card">
-      <h3>Resume & LinkedIn Optimization</h3>
-      <p>High-impact, recruiter and ATS-aligned professional branding.</p>
+  </header>
+
+  <!-- EXPERTISE -->
+  <section>
+    <h2>Our Expertise</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Talent Advisory</h3>
+        <p>Role alignment, profile assessment, and international hiring strategy.</p>
+      </div>
+
+      <div class="card">
+        <h3>Resume & LinkedIn Optimization</h3>
+        <p>ATS-aligned resumes and recruiter-focused LinkedIn positioning.</p>
+      </div>
+
+      <div class="card">
+        <h3>Interview Coordination</h3>
+        <p>Structured interview scheduling and hiring pipeline coordination.</p>
+      </div>
+
+      <div class="card">
+        <h3>Application Support</h3>
+        <p>Manual, compliant job application support with role relevance.</p>
+      </div>
     </div>
-    <div class="card">
-      <h3>Interview Coordination</h3>
-      <p>End-to-end interview scheduling and hiring workflow management.</p>
+  </section>
+
+  <!-- CLIENTS -->
+  <section>
+    <h2>Clients & Industry Associations</h2>
+
+    <div class="grid logos">
+      <div class="logo-card">
+        <img src="teksystems.jpg" alt="Teksystems">
+      </div>
+
+      <div class="logo-card">
+        <img src="kommforce.jpg" alt="KommForce Solutions">
+      </div>
+
+      <div class="logo-card">
+        <img src="rose.jpg" alt="Rose Internationals">
+      </div>
+
+      <div class="logo-card">
+        <img src="softtechers.jpg" alt="Softtechers Inc">
+      </div>
+
+      <div class="logo-card">
+        <img src="tands.jpg" alt="TandS Solutions">
+      </div>
+
+      <div class="logo-card">
+        <img src="jgj.jpg" alt="JGJ Infotech">
+      </div>
     </div>
-    <div class="card">
-      <h3>Application Support</h3>
-      <p>Manual, compliant, role-specific job application execution.</p>
-    </div>
-  </div>
-</section>
 
-<!-- CLIENTS -->
-<section>
-  <h2>Clients & Industry Associations</h2>
-
-  <div class="clients">
-    <div class="client-box"><img src="assets/teksystems.jpg" alt="Teksystems"></div>
-    <div class="client-box"><img src="assets/kommforce.jpg" alt="KommForce Solutions"></div>
-    <div class="client-box"><img src="assets/rose.jpg" alt="Rose Internationals"></div>
-    <div class="client-box"><img src="assets/softtechers.jpg" alt="Softtechers Inc"></div>
-    <div class="client-box"><img src="assets/tands.jpg" alt="TandS Solutions"></div>
-    <div class="client-box"><img src="assets/jgj.jpg" alt="JGJ Infotech"></div>
-  </div>
-
-  <p style="margin-top:40px; font-size:16px; color:#64748b; text-align:center;">
-    Logos are displayed for professional reference only.  
-    No ownership, partnership, or employment claims are implied.
-  </p>
-</section>
-
-<!-- COMPLIANCE -->
-<section>
-  <h2>Compliance & Ethics</h2>
-  <div class="card">
-    <p class="note">
-      ❌ No visa services, no document editing, no impersonation,
-      and no illegal hiring practices.
+    <p style="margin-top:30px; text-align:center; font-size:14px; color:#6b7280;">
+      Logos are displayed for professional reference only.  
+      No ownership, partnership, or employment claims are implied.
     </p>
-    <p style="font-size:18px; color:#475569;">
-      All engagements are strictly legal, ethical, transparent,
-      and compliant with applicable recruitment regulations.
-    </p>
-  </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section>
-  <h2>Contact</h2>
-  <div class="card">
-    <p style="font-size:20px;">Email: <a href="mailto:sssvhunters@gmail.com">sssvhunters@gmail.com</a></p>
-    <p style="font-size:20px;">Website: sssvhunters.com</p>
-    <p style="font-size:18px;"><em>Engagement fees are discussed after consultation.</em></p>
-  </div>
-</section>
+  <!-- COMPLIANCE -->
+  <section>
+    <h2>Compliance & Ethics</h2>
 
-<footer>
-  © 2026 SSSV Hunters. All rights reserved.<br/>
-  Talent advisory & hiring support only. No job guarantees.
-</footer>
+    <div class="card">
+      <p style="color:#dc2626; font-weight:600;">
+        ❌ We do not provide visa services, document manipulation,
+        impersonation, or any illegal hiring practices.
+      </p>
+      <p>
+        All services are strictly limited to legal, ethical, and compliant
+        recruitment advisory and coordination support.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section>
+    <h2>Contact</h2>
+
+    <div class="card">
+      <p>Email: <a href="mailto:sssvhunters@gmail.com">sssvhunters@gmail.com</a></p>
+      <p>Website: sssvhunters.com</p>
+      <p><em>Engagement fees are discussed after initial consultation.</em></p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 SSSV Hunters. All rights reserved.<br>
+    Talent advisory & hiring support. No job guarantees.
+  </footer>
 
 </body>
 </html>
+
+
