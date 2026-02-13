@@ -1,205 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SSSV Hunters | Strategic Talent Advisory</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSSV Hunters | US Market Talent & Hiring Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0f172a; /* Navy Dark */
-            --accent: #2563eb;  /* Professional Blue */
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.15);
             --text-main: #1e293b;
             --text-muted: #64748b;
-            --bg-light: #f8fafc;
+            --bg-body: #f1f5f9;
             --white: #ffffff;
+            --danger: #dc2626;
         }
 
-        * { box-sizing: border-box; transition: all 0.3s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
 
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            color: var(--text-main);
-            background: var(--bg-light);
-            line-height: 1.6;
-        }
-
-        /* Nav Bar */
+        /* --- Global Layout --- */
+        section { padding: 100px 10% 100px 10%; }
+        .container { max-width: 1300px; margin: 0 auto; }
+        
+        /* --- Navigation --- */
         nav {
+            padding: 25px 8%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid #e2e8f0;
         }
+        .logo { font-weight: 800; font-size: 1.6rem; color: var(--primary); letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
 
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); }
-
-        /* Hero Section */
-        header {
+        /* --- Hero --- */
+        .hero {
+            background: radial-gradient(circle at 70% 30%, #dbeafe 0%, #f1f5f9 100%);
             min-height: 80vh;
             display: flex;
             align-items: center;
-            justify-content: center;
             text-align: center;
-            padding: 60px 20px;
-            background: radial-gradient(circle at top right, #e2e8f0, #f8fafc);
         }
-
-        .hero-content { max-width: 850px; }
-
-        header h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
+        .hero h1 { 
+            font-size: clamp(2.5rem, 6vw, 4.5rem); 
+            font-weight: 800; 
+            color: var(--primary); 
             line-height: 1.1;
-            margin-bottom: 24px;
-            color: var(--primary);
+            margin-bottom: 25px;
+        }
+        .hero p { 
+            font-size: 1.25rem; 
+            max-width: 800px; 
+            margin: 0 auto 40px auto; 
+            color: var(--text-muted); 
         }
 
-        header p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 40px;
-        }
-
-        /* Buttons */
         .btn {
-            display: inline-block;
-            padding: 16px 32px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
             text-decoration: none;
-            cursor: pointer;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .btn-primary { background: var(--accent); color: white; box-shadow: 0 10px 30px var(--accent-glow); }
+        .btn-primary:hover { transform: scale(1.05); background: #1d4ed8; }
+
+        /* --- Market Badge --- */
+        .market-badge {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
         }
 
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4); }
-
-        /* Sections */
-        section { max-width: 1200px; margin: auto; padding: 100px 20px; }
-        h2 { font-size: 2.25rem; text-align: center; margin-bottom: 50px; color: var(--primary); }
-
-        /* Grid Cards */
-        .grid {
+        /* --- Service Grid --- */
+        .grid-6 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
         }
-
-        .card {
+        .service-card {
             background: var(--white);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            padding: 45px;
+            border-radius: 24px;
+            border: 1px solid #eef2f6;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+        }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--primary); }
+        .service-card p { color: var(--text-muted); font-size: 0.95rem; }
+        .service-card .icon-box {
+            width: 50px; height: 50px; background: var(--accent-glow);
+            border-radius: 12px; margin-bottom: 25px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent); font-weight: 800;
         }
 
-        .card:hover { border-color: var(--accent); }
-
-        .card h3 { font-size: 1.4rem; margin-bottom: 15px; }
-
-        /* Logo Grid */
-        .logo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-            align-items: center;
-            opacity: 0.7;
-            filter: grayscale(1);
-        }
-
-        .logo-grid img { width: 100%; max-width: 140px; height: auto; margin: auto; }
-
-        /* Compliance Box */
-        .compliance-banner {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-            padding: 30px;
-            border-radius: 12px;
-            margin-top: 40px;
-        }
-
-        footer {
+        /* --- Customization Strategy Section --- */
+        .strategy-box {
             background: var(--primary);
-            color: #94a3b8;
-            padding: 60px 20px;
-            text-align: center;
+            border-radius: 32px;
+            padding: 60px;
+            color: white;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
         }
+        .strategy-text { flex: 1; min-width: 300px; }
+        .strategy-list { flex: 1; min-width: 300px; }
+        .strategy-item {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent);
+        }
+
+        /* --- Partner Logos --- */
+        .partners { background: var(--white); border-radius: 32px; padding: 60px; margin-top: -50px; position: relative; z-index: 10; box-shadow: 0 20px 50px rgba
+
+(0,0,0,0.03); }
+        .logo-flex {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; align-items: center;
+            filter: grayscale(1); opacity: 0.6;
+        }
+        .logo-flex img { height: 40px; transition: 0.3s; }
+        .logo-flex img:hover { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
+
+        /* --- Footer --- */
+        footer { background: #020617; color: #94a3b8; padding: 100px 10% 50px 10%; text-align: center; }
+        .contact-cta { font-size: 2.5rem; color: white; font-weight: 800; margin-bottom: 40px; }
 
         @media (max-width: 768px) {
-            header h1 { font-size: 2.5rem; }
+            section { padding: 60px 5%; }
+            .grid-6 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">SSSV Hunters</div>
-        <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px;">Contact Us</a>
+        <div class="logo">SSSV<span>HUNTERS</span></div>
+        <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary" style="padding: 12px 25px; font-size: 0.9rem;">Consult an Expert</a>
     </nav>
 
-    <header>
-        <div class="hero-content">
-            <h1>Expert Talent Acquisition & Strategic Hiring.</h1>
-            <p>We provide ethical, ATS-optimized, and premium advisory services for global professionals seeking their next high-impact role.</p>
-            <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary">Book an Advisory Session</a>
-        </div>
-    </header>
+    <section class="hero">
+        <div class="container">
+            <span class="market-badge">Ready for the US Market 🇺🇸</span>
+            <h1>Tailored Talent Strategy for the Modern Economy.</h1>
+            <p>We provide high-impact personal marketing and custom hiring strategies for elite consultants and global enterprises. No generic solutions—only data-
 
-    <section>
-        <h2>Our Strategic Expertise</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Global Talent Advisory</h3>
-                <p>Navigating international hiring landscapes with role alignment and profile positioning strategies.</p>
-            </div>
-            <div class="card">
-                <h3>Executive Optimization</h3>
-                <p>Crafting ATS-compliant resumes and high-authority LinkedIn profiles that get noticed by recruiters.</p>
-            </div>
-            <div class="card">
-                <h3>Pipeline Coordination</h3>
-                <p>End-to-end interview scheduling and coordination to ensure a seamless hiring experience.</p>
-            </div>
+driven, ATS-optimized, and ethically sound career engineering.</p>
+            <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary">Schedule Strategy Call</a>
         </div>
     </section>
 
-    <section style="background: #fff;">
-        <div style="max-width: 1200px; margin: auto; padding: 0 20px;">
-            <h2 style="font-size: 1.5rem; color: var(--text-muted);">Trusted Knowledge Partners</h2>
-            <div class="logo-grid">
+    <div class="container">
+        <section class="partners">
+            <p style="text-align: center; margin-bottom: 30px; font-weight: 700; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Recognized 
+
+Industry Exposure</p>
+            <div class="logo-flex">
                 <img src="teksystems.jpg" alt="Teksystems">
                 <img src="kommforce.jpg" alt="KommForce">
                 <img src="rose.jpg" alt="Rose International">
                 <img src="softtechers.jpg" alt="Softtechers">
-                <img src="tands.jpg" alt="T&S">
+                <img src="tands.jpg" alt="TandS">
                 <img src="jgj.jpg" alt="JGJ">
+            </div>
+        </section>
+    </div>
+
+    <section>
+        <div class="container">
+            <p style="color: var(--accent); font-weight: 800; text-align: center; margin-bottom: 10px;">CORE EXPERTISE</p>
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 60px;">Bespoke Services for US Clients</h2>
+            
+            <div class="grid-6">
+                <div class="service-card">
+                    <div class="icon-box">01</div>
+                    <h3>Personal Marketing</h3>
+                    <p>We don't just write resumes; we build brands. We position consultants as thought leaders to attract premium US-based opportunities.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">02</div>
+                    <h3>Custom Strategy</h3>
+                    <p>Tailored roadmap design based on specific client requirements, visa constraints (advisory only), and niche market demands.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">03</div>
+                    <h3>ATS Architecture</h3>
+                    <p>Advanced keyword engineering for US job portals, ensuring your profile hits the top 1% of recruiter searches every time.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">04</div>
+                    <h3>LinkedIn Ecosystem</h3>
+                    <p>Total profile overhaul including SEO headlines, professional summaries, and networking strategy for the American market.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">05</div>
+                    <h3>Interview Mentorship</h3>
+                    <p>Comprehensive preparation for behavioral and technical rounds used by Fortune 500 companies and Tier-1 vendors.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-box">06</div>
+                    <h3>Market Intelligence</h3>
+                    <p>Detailed insights into salary benchmarks, vendor reliability, and hiring trends across the United States IT & business sectors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding-top: 0;">
+        <div class="container">
+            <div class="strategy-box">
+                <div class="strategy-text">
+                    <h2 style="color: white; text-align: left; margin-bottom: 20px;">The SSSV Methodology</h2>
+                    <p style="opacity: 0.8; margin-bottom: 30px;">Every client is unique. We reject the "one-size-fits-all" approach and replace it with a 4-phase 
+
+customized engagement model designed for the US landscape.</p>
+                    <a href="mailto:sssvhunters@gmail.com" class="btn btn-primary">Consult the Expert Now ...</a>
+                </div>
+                <div class="strategy-list">
+                    <div class="strategy-item">
+                        <strong>01. Assessment:</strong> Analyzing current profile gaps and market positioning.
+                    </div>
+                    <div class="strategy-item">
+                        <strong>02. Calibration:</strong> Aligning consultant skills with specific US industry standards.
+                    </div>
+                    <div class="strategy-item">
+                        <strong>03. Deployment:</strong> Optimized application support and vendor outreach.
+                    </div>
+                    <div class="strategy-item">
+                        <strong>04. Negotiation:</strong> Advisory on engagement terms and professional ethics.
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <section>
-        <h2>Compliance & Integrity</h2>
-        <div class="compliance-banner">
-            <p style="color: #991b1b; font-weight: 700; margin-bottom: 10px;">Strict Ethical Standard</p>
-            <p>SSSV Hunters operates under a strict code of ethics. We do not provide visa sponsorship, document alteration, or non-compliant hiring practices. Our focus is purely on legal, performance-based advisory.</p>
+        <div class="container" style="background: #fee2e2; border-radius: 24px; padding: 40px; border: 1px solid #fecaca;">
+            <h3 style="color: var(--danger); margin-bottom: 15px;">Strict Compliance Framework</h3>
+            <p style="color: #991b1b; font-size: 0.95rem;">
+                SSSV Hunters operates as a <strong>Talent Advisory & Support Consultancy</strong>. We strictly prohibit and do not provide: visa sponsorship, document 
+
+fraud, profile impersonation, or any illegal hiring practices. All our services are focused on legal, ethical, and administrative career support.
+            </p>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 SSSV Hunters. Global Talent Advisory Consultancy.</p>
-        <p style="font-size: 12px; margin-top: 20px;">No job guarantees are implied. Fees are based on advisory time and expertise.</p>
+        <div class="container">
+            <h2 class="contact-cta">Your next US opportunity starts here.</h2>
+            <p style="margin-bottom: 40px;">Contact us for a confidential consultation regarding your hiring or career needs.</p>
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 24px; display: inline-block; width: 100%; max-width: 600px;">
+                <p>Email: <a href="mailto:sssvhunters@gmail.com" style="color: white; text-decoration: none; font-weight: 700;">sssvhunters@gmail.com</a></p>
+                <p style="margin-top: 10px;">Official Website: <strong>sssvhunters.com</strong></p>
+            </div>
+
+            <p style="margin-top: 80px; font-size: 0.8rem; opacity: 0.5;">
+                © 2026 SSSV Hunters. All Rights Reserved. <br>
+                Global Advisory Support | Strictly Ethical Recruitment Coordination.
+            </p>
+        </div>
     </footer>
 
 </body>
