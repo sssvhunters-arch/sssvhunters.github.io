@@ -38,7 +38,7 @@
         }
         .logo-wrapper { display: flex; align-items: center; gap: 20px; }
         .logo-img { 
-            height: 80px; /* Increased for clear visibility */
+            height: 80px; 
             width: auto;
             border-radius: 8px; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.08); 
@@ -79,6 +79,8 @@
             background: var(--primary);
             color: white;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: none;
+            cursor: pointer;
         }
         .btn-bold:hover { transform: translateY(-8px); background: var(--accent); box-shadow: 0 30px 60px var(--accent-glow); }
 
@@ -129,7 +131,9 @@
         }
         .power-card h3 { font-size: 2rem; margin-bottom: 20px; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
         .power-card p { font-size: 1.1rem; color: var(--text-muted); font-weight: 500; }
-        .power-card .glow { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%); }
+        .power-card .glow { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(37,99,235,0.03) 0%, 
+
+transparent 70%); }
 
         /* --- 8. DIVERSITY (Global Impact) --- */
         .diversity-banner {
@@ -142,6 +146,45 @@
         }
         .diversity-banner h2 { font-size: 4rem; margin-bottom: 20px; letter-spacing: -3px; text-transform: uppercase; }
         .diversity-banner p { font-size: 1.3rem; opacity: 0.8; max-width: 800px; margin: 0 auto 50px auto; }
+
+        /* --- NEW: CONTACT FORM SECTION --- */
+        .contact-section {
+            padding: 100px 10%;
+            background: #f8fafc;
+        }
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 10px; color: var(--primary); font-size: 0.9rem; text-transform: uppercase; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #f1f5f9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: white;
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+        #form-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            font-weight: 700;
+        }
 
         /* --- 9. FOOTER (Conversion) --- */
         footer { padding: 120px 10% 60px 10%; text-align: center; }
@@ -163,6 +206,7 @@
             .diversity-banner h2 { font-size: 2.5rem; }
             .logo-img { height: 60px; }
             nav { padding: 15px 5%; }
+            .contact-container { padding: 30px; }
         }
     </style>
 </head>
@@ -177,10 +221,14 @@
     </nav>
 
     <header class="hero">
-                <div style="font-weight: 700; color: var(--accent-blue); margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">Evolutionary Recruitment</div>
+        <div style="font-weight: 700; color: var(--accent-blue); margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">Evolutionary 
+
+Recruitment</div>
         <h1>THE NEW ERA OF <br><span>TALENT DOMINANCE.</span></h1>
-        <p>Global talent, localized dominance. SSSV Hunters is the elite intelligence firm bridging diverse world-class consultants with the high-stakes American tech ecosystem.</p>
-        <a href="mailto:sssvhunters@gmail.com" class="btn-bold">SCALE YOUR CAREER</a>
+        <p>Global talent, localized dominance. SSSV Hunters is the elite intelligence firm bridging diverse world-class consultants with the high-stakes American tech 
+
+ecosystem.</p>
+        <a href="#contact" class="btn-bold">SCALE YOUR CAREER</a>
     </header>
 
     <div class="partners-wrap">
@@ -242,11 +290,37 @@
         </div>
     </section>
 
+    <section class="contact-section" id="contact">
+        <h2 class="section-title">Secure Your Consultation</h2>
+        <div class="contact-container">
+            <form id="sssv-contact-form" action="https://formspree.io/f/sssvhunters@gmail.com" method="POST">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" placeholder="+1 (555) 000-0000" required>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="5" placeholder="How can we help dominate your market?" required></textarea>
+                </div>
+                <button type="submit" class="btn-bold" style="width: 100%;">TRANSMIT INTEL</button>
+                <div id="form-status"></div>
+            </form>
+        </div>
+    </section>
+
     <footer>
         <div class="footer-card">
             <h2>TIME TO <br>DOMINATE.</h2>
             <p style="font-size: 1.4rem; margin-bottom: 40px; opacity: 0.9;">Confidential assessments for elite consultants and hiring partners.</p>
-            <a href="mailto:sssvhunters@gmail.com" class="btn-bold" style="background: white; color: var(--primary);">Contact Advisor</a>
+            <a href="#contact" class="btn-bold" style="background: white; color: var(--primary);">Contact Advisor</a>
         </div>
         <div class="contact-email">sssvhunters@gmail.com</div>
         <div style="font-weight: 700; color: var(--text-muted); margin-bottom: 40px;">Official Portal: sssvhunters.com</div>
@@ -256,6 +330,45 @@
         </p>
     </footer>
 
+    <script>
+        const form = document.getElementById("sssv-contact-form");
+        const status = document.getElementById("form-status");
+
+        async function handleSubmit(event) {
+          event.preventDefault();
+          const data = new FormData(event.target);
+          
+          fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+          }).then(response => {
+            if (response.ok) {
+              status.innerHTML = "Success! Your message has been sent to our advisors.";
+              status.style.display = "block";
+              status.style.backgroundColor = "#dcfce7";
+              status.style.color = "#166534";
+              form.reset();
+            } else {
+              response.json().then(data => {
+                if (Object.hasOwn(data, 'errors')) {
+                  status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                } else {
+                  status.innerHTML = "Oops! There was a problem submitting your form";
+                }
+              })
+            }
+          }).catch(error => {
+            status.innerHTML = "Oops! There was a problem submitting your form";
+            status.style.display = "block";
+            status.style.backgroundColor = "#fee2e2";
+            status.style.color = "#991b1b";
+          });
+        }
+        form.addEventListener("submit", handleSubmit);
+    </script>
+
 </body>
 </html>
-
