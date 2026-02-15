@@ -23,7 +23,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-bright); color: var(--text-main); line-height: 1.4; overflow-x: hidden; }
 
-        /* --- 3. NAVIGATION (Branding Flow) --- */
+        /* --- 3. UPDATED NAVIGATION (Legitimate & Authoritative) --- */
         nav {
             padding: 15px 8%;
             background: var(--glass);
@@ -36,6 +36,7 @@
             z-index: 1000;
             border-bottom: 1px solid #e2e8f0;
         }
+
         .logo-wrapper { display: flex; align-items: center; gap: 20px; }
         .logo-img { 
             height: 80px; 
@@ -45,11 +46,56 @@
             object-fit: contain;
             transition: transform 0.3s ease;
         }
-        .logo-img:hover { transform: scale(1.05); }
         .logo { font-weight: 800; font-size: 1.7rem; color: var(--primary); letter-spacing: -1.5px; }
         .logo span { color: var(--accent); }
 
-        /* --- 4. HERO (Value Proposition) --- */
+        /* Navigation Button Group */
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Authoritative Career Button */
+        .btn-career {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 24px;
+            border: 1.5px solid var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-career:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Live Indicator Pulse */
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #10b981; /* Professional Green */
+            border-radius: 50%;
+            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+            animation: pulse-animation 2s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(16, 185, 129, 0); }
+        }
+
+        /* --- 4. HERO --- */
         .hero {
             padding: 120px 10% 80px 10%;
             background: radial-gradient(circle at 80% 20%, #eff6ff 0%, #ffffff 100%);
@@ -82,7 +128,7 @@
         }
         .btn-bold:hover { transform: translateY(-8px); background: var(--accent); box-shadow: 0 30px 60px var(--accent-glow); }
 
-        /* --- 6. PARTNERS (Social Proof) --- */
+        /* --- 6. PARTNERS --- */
         .partners-wrap { padding: 80px 0; background: #fafafa; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-top: 40px; }
         .logo-grid {
             display: flex;
@@ -108,7 +154,7 @@
         }
         .logo-card-3d img { height: 40px; width: auto; object-fit: contain; }
 
-        /* --- 7. SERVICES (Detailed Capabilities) --- */
+        /* --- 7. SERVICES --- */
         section { padding: 100px 10%; }
         .section-title { text-align: center; font-size: 3.5rem; font-weight: 800; margin-bottom: 60px; letter-spacing: -2px; text-transform: uppercase; }
         .grid-3d { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
@@ -129,9 +175,11 @@
         }
         .power-card h3 { font-size: 2rem; margin-bottom: 20px; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
         .power-card p { font-size: 1.1rem; color: var(--text-muted); font-weight: 500; }
-        .power-card .glow { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(37,99,235,0.03) 0%, transparent 70%); }
+        .power-card .glow { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(37,99,235,0.03) 0%, 
 
-        /* --- 8. DIVERSITY (Global Impact) --- */
+transparent 70%); }
+
+        /* --- 8. DIVERSITY --- */
         .diversity-banner {
             background: var(--primary);
             color: white;
@@ -143,7 +191,7 @@
         .diversity-banner h2 { font-size: 4rem; margin-bottom: 20px; letter-spacing: -3px; text-transform: uppercase; }
         .diversity-banner p { font-size: 1.3rem; opacity: 0.8; max-width: 800px; margin: 0 auto 50px auto; }
 
-        /* --- 9. FOOTER (Conversion) --- */
+        /* --- 9. FOOTER --- */
         footer { padding: 120px 10% 60px 10%; text-align: center; }
         .footer-card {
             background: var(--accent);
@@ -162,7 +210,8 @@
             .section-title { font-size: 2.5rem; }
             .diversity-banner h2 { font-size: 2.5rem; }
             .logo-img { height: 60px; }
-            nav { padding: 15px 5%; }
+            nav { padding: 15px 5%; flex-direction: column; gap: 15px; }
+            .nav-buttons { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -173,13 +222,22 @@
             <img src="bg.jpg" alt="SSSV Logo" class="logo-img">
             <div class="logo">SSSV<span>HUNTERS</span></div>
         </div>
-        <a href="mailto:sssvhunters@gmail.com" class="btn-bold" style="padding: 12px 30px; font-size: 0.9rem; border-radius: 10px;">Email Now !</a>
+        <div class="nav-buttons">
+            <a href="career.html" class="btn-career">
+                <span class="pulse"></span> Current Openings
+            </a>
+            <a href="mailto:sssvhunters@gmail.com" class="btn-bold" style="padding: 12px 30px; font-size: 0.9rem; border-radius: 6px;">Consult Advisor</a>
+        </div>
     </nav>
 
     <header class="hero">
-        <div style="font-weight: 700; color: var(--accent-blue); margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">Evolutionary Recruitment</div>
-        <h1>THE NEW ERA OF <br><span>TALENT DOMINANCE.</span></h1>
-        <p>Global talent, localized dominance. SSSV Hunters is the elite intelligence firm bridging diverse world-class consultants with the high-stakes American tech ecosystem.</p>
+        <div style="font-weight: 700; color: var(--accent); margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">Evolutionary 
+
+Recruitment</div>
+        <h1>THE NEW ERA OF <br><span>TALENT DOMINANCE</span></h1>
+        <p>Global talent, localized dominance. SSSV Hunters is the elite intelligence firm bridging diverse world-class consultants with the high-stakes American tech 
+
+ecosystem.</p>
         <a href="mailto:sssvhunters@gmail.com" class="btn-bold">SCALE YOUR CAREER</a>
     </header>
 
