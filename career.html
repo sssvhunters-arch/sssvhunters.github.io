@@ -8,22 +8,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. GLOBAL VARIABLES --- */
         :root {
             --primary: #000000;
             --accent: #2563eb;
-            --accent-glow: rgba(37, 99, 235, 0.2);
             --text-main: #0f172a;
             --text-muted: #64748b;
             --bg-bright: #ffffff;
             --glass: rgba(255, 255, 255, 0.9);
         }
 
-        /* --- 2. BASE RESET --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg-bright); color: var(--text-main); line-height: 1.4; overflow-x: hidden; }
 
-        /* --- 3. NAVIGATION --- */
+        /* --- NAVIGATION --- */
         nav {
             padding: 15px 8%;
             background: var(--glass);
@@ -33,103 +30,89 @@
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 1001;
             border-bottom: 1px solid #e2e8f0;
         }
         .logo-wrapper { display: flex; align-items: center; gap: 20px; }
-        .logo-img { 
-            height: 80px; 
-            width: auto;
-            border-radius: 8px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08); 
-            object-fit: contain;
-        }
-        .logo { font-weight: 800; font-size: 1.7rem; color: var(--primary); letter-spacing: -1.5px; text-decoration: none; }
+        .logo-img { height: 60px; width: auto; border-radius: 8px; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); text-decoration: none; }
         .logo span { color: var(--accent); }
 
-        /* --- 4. HERO SECTION --- */
-        .hero {
-            padding: 100px 10% 60px 10%;
-            background: radial-gradient(circle at 20% 20%, #eff6ff 0%, #ffffff 100%);
-            text-align: center;
-        }
-        .hero h1 { 
-            font-size: clamp(3rem, 6vw, 5rem); 
-            font-weight: 800; 
-            color: var(--primary); 
-            letter-spacing: -3px;
-            line-height: 1;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-        .hero h1 span { color: var(--accent); }
-
-        /* --- 5. JOB GRID --- */
-        .job-section { padding: 60px 10%; }
-        .job-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-        }
-        .job-card {
-            background: white;
-            padding: 40px;
-            border-radius: 25px;
-            border: 1px solid #f1f5f9;
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        /* --- HERO & SEARCH --- */
+        .hero { padding: 60px 8% 20px 8%; text-align: center; }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 15px; text-transform: uppercase; }
+        .hero span { color: var(--accent); }
+        
+        .search-container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
+        #jobSearch {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
-        .job-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.1);
+        #jobSearch:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(37, 99, 235, 0.1); }
+
+        /* --- DATA TABLE --- */
+        .job-section { padding: 0 8% 60px 8%; }
+        .table-wrapper { 
+            overflow-x: auto; 
+            background: white; 
+            border-radius: 15px; 
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            max-height: 700px; /* Optional: adds scroll within the table area */
+            overflow-y: auto;
         }
-        .job-tag {
-            display: inline-block;
-            padding: 6px 14px;
-            background: #eff6ff;
-            color: var(--accent);
-            border-radius: 100px;
-            font-size: 0.75rem;
+        
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        
+        thead th {
+            position: sticky;
+            top: 0;
+            background: #f8fafc;
+            color: var(--primary);
             font-weight: 800;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding: 20px;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+            z-index: 10;
         }
-        .job-card h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: 15px; color: var(--primary); }
-        .job-card p { font-size: 1rem; color: var(--text-muted); margin-bottom: 25px; min-height: 60px; }
 
-        /* --- 6. BUTTONS --- */
-        .btn-bold { 
-            padding: 18px 35px; 
-            border-radius: 12px; 
-            font-weight: 800; 
-            text-decoration: none; 
-            display: inline-block; 
-            font-size: 1rem;
-            transition: all 0.3s ease; 
+        tbody tr { border-bottom: 1px solid #f1f5f9; transition: 0.2s; }
+        tbody tr:hover { background-color: #f8fbff; }
+        
+        td { padding: 18px 20px; font-size: 0.9rem; color: var(--text-main); vertical-align: middle; }
+        .job-title { font-weight: 700; color: var(--primary); display: block; margin-bottom: 4px; }
+        .job-id { color: var(--accent); font-weight: 800; font-size: 0.75rem; }
+        .rate-tag { font-weight: 700; color: #059669; background: #ecfdf5; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; }
+
+        /* --- BUTTON --- */
+        .btn-apply {
             background: var(--primary);
-            color: white;
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8rem;
+            display: inline-block;
+            transition: 0.3s;
+            white-space: nowrap;
             text-align: center;
         }
-        .btn-bold:hover { background: var(--accent); transform: scale(1.02); }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
+        .btn-apply:hover { background: var(--accent); transform: translateY(-2px); }
 
-        /* --- 7. FOOTER --- */
-        footer { padding: 80px 10% 40px 10%; text-align: center; border-top: 1px solid #f1f5f9; }
-        .contact-email { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin-bottom: 10px; }
+        #noResults { display: none; text-align: center; padding: 40px; color: var(--text-muted); font-weight: 600; }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; }
-            .job-grid { grid-template-columns: 1fr; }
-        }
+        footer { padding: 60px 8%; text-align: center; border-top: 1px solid #f1f5f9; background: #fafafa; }
+        .footer-email { font-size: 1.5rem; font-weight: 800; color: var(--accent); text-decoration: none; }
     </style>
 </head>
 <body>
@@ -139,124 +122,225 @@
             <img src="bg.jpg" alt="SSSV Logo" class="logo-img">
             <a href="index.html" class="logo">SSSV<span>HUNTERS</span></a>
         </div>
-        <a href="mailto:sssvhunters@gmail.com" class="btn-bold" style="padding: 10px 20px; font-size: 0.8rem;">Join us Now !!!</a>
+        <a href="mailto:Info@SSSvHunters.com" class="btn-apply" style="background: transparent; color: var(--primary) !important; border: 1px solid #e2e8f0;">Contact Info</a>
     </nav>
 
     <header class="hero">
-        <div style="font-weight: 700; color: var(--accent); margin-bottom: 15px; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;">Current 
-
-Openings</div>
-        <h1>OPEN ROLES FOR <br><span>ELITE CONSULTANTS.</span></h1>
-        <p style="max-width: 700px; margin: 0 auto; color: var(--text-muted);">Direct placement into US Fortune 500 ecosystems and high-growth tech hubs.</p>
+        <div style="font-weight: 700; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Career Portal</div>
+        <h1>ELITE <span>OPPORTUNITIES</span></h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Direct W2 and Contract placements for top-tier Engineering and IT talent.</p>
+        
+        <div class="search-container">
+            <input type="text" id="jobSearch" placeholder="Filter by Skill, Location, Client (e.g., Chicago, Caterpillar, Java)...">
+        </div>
     </header>
 
     <section class="job-section">
-        <div class="job-grid">
-            
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">AI & Machine Learning</span>
-                    <h3>Generative AI Engineer</h3>
-                    <p>Design and deploy LLM pipelines. Expertise in RAG, fine-tuning, and Python/PyTorch required for NYC-based Fintech lead.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: Generative AI Engineer" class="btn-bold">Email Resume</a>
-            </div>
+        <div class="table-wrapper">
+            <table id="jobTable">
+                <thead>
+                    <tr>
+                        <th>Role & Reference</th>
+                        <th>Location</th>
+                        <th>Client</th>
+                        <th>Duration / Rate</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="jobBody">
+                    
+                    <tr>
+                        <td>
+                            <span class="job-title">Java Backend Developer</span>
+                            <span class="job-id">ID: 80400 - 80403</span>
+                        </td>
+                        <td>Chicago, IL (Hybrid - 3 days)</td>
+                        <td>Rose International</td>
+                        <td>12 Months <br> <span class="rate-tag">$65/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Java Backend Developer (ID: 80400)&body=Attached is my resume for the Java Backend Developer position in Chicago." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Cloud Infrastructure</span>
-                    <h3>Cloud Architect (AWS/Azure)</h3>
-                    <p>Lead large-scale migration for Silicon Valley SaaS. Strong Terraform, Kubernetes, and Multi-cloud security background.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: Cloud Architect" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">Network Engineer 4 (WLAN Analyst)</span>
+                            <span class="job-id">ID: 86959</span>
+                        </td>
+                        <td>East Peoria, IL (Day 1 Onsite)</td>
+                        <td>Rose International</td>
+                        <td>12 Months <br> <span class="rate-tag">$50/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Network Engineer 4 (ID: 86959)&body=I am applying for the Network Engineer role in East Peoria." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Cybersecurity</span>
-                    <h3>Senior DevSecOps Engineer</h3>
-                    <p>Infiltrate security protocols to build bulletproof CI/CD pipelines. Experience with automated threat detection and compliance.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: DevSecOps Engineer" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">Senior Cloud Data Engineer</span>
+                            <span class="job-id">State of MA</span>
+                        </td>
+                        <td>Quincy, MA (Day 1 Onsite)</td>
+                        <td>Rose Int. / State of MA</td>
+                        <td>12 Months <br> <span class="rate-tag">$60/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Senior Cloud Data Engineer (Quincy, MA)&body=Please review my resume for the Cloud Data Engineer role." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Software Engineering</span>
-                    <h3>Full Stack Developer (Go/React)</h3>
-                    <p>Architect high-concurrency backend systems and responsive front-end interfaces for a Tier-1 streaming platform.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: Full Stack Developer" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">Workday Integration Lead</span>
+                            <span class="job-id">Financial Services</span>
+                        </td>
+                        <td>Chicago, IL (Day 1 Onsite)</td>
+                        <td>Rose International</td>
+                        <td>Full-time / Contract <br> <span class="rate-tag">Market Rate</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Workday Integration Lead&body=Applying for the Workday Integration Lead position in Chicago." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Data Engineering</span>
-                    <h3>Big Data Engineer</h3>
-                    <p>Master the data flow. Expertise in Spark, Snowflake, and real-time streaming (Kafka) for a global retail giant.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: Big Data Engineer" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">PLC Controls Engineer</span>
+                            <span class="job-id">ID: 82259-1 & 82260-1</span>
+                        </td>
+                        <td>Pontiac, IL (Day 1 Onsite)</td>
+                        <td>Rose International</td>
+                        <td>12 Months <br> <span class="rate-tag">$40/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: PLC Controls Engineer (ID: 82259)&body=Attached resume for the PLC Controls Engineer role." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Product</span>
-                    <h3>Technical Product Manager</h3>
-                    <p>Bridge the gap between AI innovation and market dominance. Define roadmaps for enterprise-scale AI products.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: Technical Product Manager" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">Quality & Manufacturing Engineer (APQP)</span>
+                            <span class="job-id">ID: 79584-1</span>
+                        </td>
+                        <td>Lafayette, IN (Hybrid - 3 days)</td>
+                        <td>Caterpillar</td>
+                        <td>24 Months <br> <span class="rate-tag">$40/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Quality Engineer (ID: 79584)&body=Applying for the Quality/Manufacturing Engineer role in Lafayette." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Data Science</span>
-                    <h3>Predictive Analytics Lead</h3>
-                    <p>Transform raw data into strategic intelligence. Advanced statistical modeling and deep business acumen required.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: Predictive Analytics Lead" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">Embedded Software Engineer</span>
+                            <span class="job-id">Caterpillar Project</span>
+                        </td>
+                        <td>Mossville, IL (Day 1 Onsite)</td>
+                        <td>Rose Int. / Caterpillar</td>
+                        <td>10 Months <br> <span class="rate-tag">$40/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Embedded Software Engineer (Mossville)&body=Applying for the Embedded role." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Management</span>
-                    <h3>IT Delivery Manager</h3>
-                    <p>Orchestrate global teams and high-stakes projects. Master of Agile, stakeholder management, and US vendor relations.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: IT Delivery Manager" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">Mechanical Engineer</span>
+                            <span class="job-id">Caterpillar Project</span>
+                        </td>
+                        <td>Decatur, IL (Day 1 Onsite)</td>
+                        <td>Caterpillar</td>
+                        <td>10 Months <br> <span class="rate-tag">$40/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Mechanical Engineer (Decatur)&body=Applying for the Mechanical Engineer role." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Blockchain</span>
-                    <h3>Web3 Solutions Engineer</h3>
-                    <p>Develop secure smart contracts and decentralized protocols for the next generation of financial infrastructure.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: Web3 Solutions Engineer" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">Electrical Engineer</span>
+                            <span class="job-id">Extension Possible</span>
+                        </td>
+                        <td>Mossville, IL</td>
+                        <td>Caterpillar</td>
+                        <td>12 Months <br> <span class="rate-tag">$50/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Electrical Engineer (Mossville)&body=Attached is my resume for the Electrical Engineer position." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
-            <div class="job-card">
-                <div>
-                    <span class="job-tag">Design</span>
-                    <h3>Principal UI/UX Architect</h3>
-                    <p>Design the interface of the future. Focus on complex enterprise data visualization and AI-driven user experiences.</p>
-                </div>
-                <a href="mailto:sssvhunters@gmail.com?subject=Application: Principal UI/UX Architect" class="btn-bold">Email Resume</a>
-            </div>
+                    <tr>
+                        <td>
+                            <span class="job-title">Ivalua - Techno Functional Consultant</span>
+                            <span class="job-id">Intuitive Surgical</span>
+                        </td>
+                        <td>Sunnyvale, CA (3 days Onsite)</td>
+                        <td>Intuitive Surgical</td>
+                        <td>12 Months <br> <span class="rate-tag">$78/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Ivalua Consultant&body=Applying for the Ivalua Techno Functional role." class="btn-apply">Apply to HR</a></td>
+                    </tr>
 
+                    <tr>
+                        <td>
+                            <span class="job-title">ServiceNow HRSD BA Consultant</span>
+                            <span class="job-id">Intuitive Surgical</span>
+                        </td>
+                        <td>Sunnyvale, CA (Day 1 Onsite)</td>
+                        <td>Intuitive Surgical</td>
+                        <td>6 Months <br> <span class="rate-tag">$70/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: ServiceNow BA&body=Review my application for the ServiceNow HRSD role." class="btn-apply">Apply to HR</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <span class="job-title">Digital Engineer 3</span>
+                            <span class="job-id">Intuitive Surgical</span>
+                        </td>
+                        <td>Sunnyvale, CA (3 days Onsite)</td>
+                        <td>Intuitive Surgical</td>
+                        <td>7 Months <br> <span class="rate-tag">$70/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: Digital Engineer 3&body=Attached is my resume for the Digital Engineer 3 role." class="btn-apply">Apply to HR</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <span class="job-title">SAP SD/OTC Business Analyst</span>
+                            <span class="job-id">Intuitive Surgical</span>
+                        </td>
+                        <td>Sunnyvale, CA (Day 1 Onsite)</td>
+                        <td>Intuitive Surgical</td>
+                        <td>12+ Months <br> <span class="rate-tag">$80/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: SAP SD Business Analyst&body=I am applying for the SAP SD/OTC BA role." class="btn-apply">Apply to HR</a></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <span class="job-title">SDET Android System III</span>
+                            <span class="job-id">ID: 36781161</span>
+                        </td>
+                        <td>Mountain View, CA (Day 1 Onsite)</td>
+                        <td>Samsung Research Inc.</td>
+                        <td>1 Year <br> <span class="rate-tag">$80/hr W2</span></td>
+                        <td><a href="mailto:HR@SSSvHunters.com?subject=Application: SDET Android (ID: 36781161)&body=Review my resume for the SDET Android System role at Samsung." class="btn-apply">Apply to HR</a></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div id="noResults">No matching roles found. Try searching for a specific location or skill.</div>
         </div>
     </section>
 
     <footer>
-        <p style="font-weight: 700; margin-bottom: 20px; color: var(--text-muted);">DON'T SEE YOUR ROLE?</p>
-        <div class="contact-email">sssvhunters@gmail.com</div>
-        <p style="font-size: 0.9rem; opacity: 0.6; max-width: 500px; margin: 0 auto 30px auto;">
-            Send us your resume for a confidential profile assessment. We create opportunities where others see obstacles.
+        <p style="font-weight: 700; margin-bottom: 20px; color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem;">General Inquiries & Support</p>
+        <a href="mailto:Info@SSSvHunters.com" class="footer-email">Info@SSSvHunters.com</a>
+        <p style="margin-top: 20px; font-size: 0.85rem; opacity: 0.7; max-width: 500px; margin-left: auto; margin-right: auto;">
+            SSSV Hunters is a premier talent advisory. We connect elite consultants with world-class engineering and technology leaders.
         </p>
-        <p style="font-size: 0.8rem; opacity: 0.4;">
+        <p style="font-size: 0.75rem; opacity: 0.5; margin-top: 40px;">
             © 2026 SSSV HUNTERS. All rights reserved. <br>
-            A Premier Talent Advisory. Strictly Ethical Coordination.
+            A Strictly Ethical Recruitment Coordination Firm.
         </p>
     </footer>
+
+    <script>
+        document.getElementById('jobSearch').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('#jobBody tr');
+            let noResults = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    row.style.display = "";
+                    visibleCount++;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            noResults.style.display = (visibleCount === 0) ? "block" : "none";
+        });
+    </script>
 
 </body>
 </html>
