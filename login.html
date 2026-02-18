@@ -1,272 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SSSV Hunters | Admin Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login | SSSV Hunters</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-    /* Background logo watermark */
-    body::before {
-      content: "";
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: url("jpj.jpg") no-repeat center;
-      background-size: contain;
-      opacity: 0.05;
-      z-index: 0;
-    }
+body {
+  height: 100vh;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
 
-    .login-box {
-      background: white;
-      padding: 50px;
-      width: 400px;
-      border-radius: 12px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
+/* Background Logo Watermark */
+body::before {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: url("jpj.jpg") no-repeat center;
+  background-size: contain;
+  opacity: 0.05;
+  z-index: 0;
+}
 
-    .login-box h1 {
-      margin-bottom: 10px;
-      font-size: 28px;
-      font-weight: 700;
-      color: #0d1b2a;
-    }
+/* Login Card */
+.login-container {
+  width: 400px;
+  background: white;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 1;
+  border-top: 5px solid #0d6efd;
+}
 
-    .login-box p {
-      margin-bottom: 30px;
-      color: #555;
-    }
+.logo-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-    input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 15px;
-      outline: none;
-    }
+.logo-title h1 {
+  font-size: 28px;
+  color: #0d6efd;
+  letter-spacing: 2px;
+}
 
-    input:focus {
-      border-color: #0077b6;
-    }
+.logo-title p {
+  color: #777;
+  font-size: 14px;
+}
 
-    button {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(90deg, #0077b6, #00b4d8);
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  transition: 0.3s;
+}
 
-    button:hover {
-      opacity: 0.9;
-    }
+input:focus {
+  border-color: #0d6efd;
+  outline: none;
+  box-shadow: 0 0 8px rgba(13,110,253,0.2);
+}
 
-    .error {
-      color: red;
-      margin-top: 10px;
-      font-size: 14px;
-    }
+button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #0d6efd, #00c6ff);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-  </style>
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+#error {
+  margin-top: 10px;
+  text-align: center;
+  color: red;
+  font-size: 14px;
+}
+
+.footer-text {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="login-box">
-    <h1>Admin Login</h1>
-    <p>SSSV Hunters Recruitment Portal</p>
+<div class="login-container">
 
-    <input type="email" id="email" placeholder="Admin Email">
-    <input type="password" id="password" placeholder="Password">
-
-    <button onclick="login()">Login</button>
-    <div class="error" id="error"></div>
+  <div class="logo-title">
+    <h1>SSSV HUNTERS</h1>
+    <p>Recruitment Admin Portal</p>
   </div>
 
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+  <input type="email" id="email" placeholder="Admin Email">
+  <input type="password" id="password" placeholder="Password">
 
-    const firebaseConfig = {
-      <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>SSSV Hunters | Admin Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <button onclick="login()">Secure Login</button>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-    }
+  <p id="error"></p>
 
-    /* Background logo watermark */
-    body::before {
-      content: "";
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: url("jpj.jpg") no-repeat center;
-      background-size: contain;
-      opacity: 0.05;
-      z-index: 0;
-    }
-
-    .login-box {
-      background: white;
-      padding: 50px;
-      width: 400px;
-      border-radius: 12px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .login-box h1 {
-      margin-bottom: 10px;
-      font-size: 28px;
-      font-weight: 700;
-      color: #0d1b2a;
-    }
-
-    .login-box p {
-      margin-bottom: 30px;
-      color: #555;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 20px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 15px;
-      outline: none;
-    }
-
-    input:focus {
-      border-color: #0077b6;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(90deg, #0077b6, #00b4d8);
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .error {
-      color: red;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-  </style>
-</head>
-<body>
-
-  <div class="login-box">
-    <h1>Admin Login</h1>
-    <p>SSSV Hunters Recruitment Portal</p>
-
-    <input type="email" id="email" placeholder="Admin Email">
-    <input type="password" id="password" placeholder="Password">
-
-    <button onclick="login()">Login</button>
-    <div class="error" id="error"></div>
+  <div class="footer-text">
+    Authorized Access Only
   </div>
 
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+</div>
 
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID"
-    };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-    window.login = function () {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+const firebaseConfig = {
+   apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+  authDomain: "sssvhunters-jobboard.firebaseapp.com",
+  projectId: "sssvhunters-jobboard",
+  storageBucket: "sssvhunters-jobboard.firebasestorage.app",
+  messagingSenderId: "724150870358",
+  appId: "1:724150870358:web:901c334ce94d530aefb6f7",
+  measurementId: "G-M1R2YQTW20"
+};
 
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          window.location.href = "dashboard.html";
-        })
-        .catch((error) => {
-          document.getElementById("error").innerText = error.message;
-        });
-    };
-  </script>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-</body>
-</html>
-"
-    };
+window.login = function () {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    window.login = function () {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          window.location.href = "dashboard.html";
-        })
-        .catch((error) => {
-          document.getElementById("error").innerText = error.message;
-        });
-    };
-  </script>
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      window.location.href = "dashboard.html";
+    })
+    .catch((error) => {
+      document.getElementById("error").innerText = error.message;
+    });
+};
+</script>
 
 </body>
 </html>
