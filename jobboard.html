@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SSSV Hunters Job Board</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<h1>Live Job Board</h1>
+<div id="jobs"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+    authDomain: "ssvhunters-jobboard.firebaseapp.com",
+    projectId: "sssvhunters-jobboard"
+    storageBucket: "sssvhunters-jobboard.firebasestorage.app",
+    messagingSenderId: "724150870358",
+    appId: "1:724150870358:web:901c334ce94d530aefb6f7",
+    measurementId: "G-M1R2YQTW20"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const jobsDiv = document.getElementById("jobs");
+
+  async function loadJobs() {
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    querySnapshot.forEach((doc) => {
+      const job = doc.data();
+
+      jobsDiv.innerHTML += `
+        <div>
+          <h3>${job.title}</h3>
+          <p>${job.location}</p>
+        </div>
+      `;
+    });
+  }
+
+  loadJobs();
+</script>
+
+</body>
+</html>
