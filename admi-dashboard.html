@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSSV Hunters | Admin Dashboard</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: url("bg.jpg") no-repeat center center/cover;
+  backdrop-filter: blur(6px);
+  min-height: 100vh;
+}
+
+.overlay {
+  background: rgba(255,255,255,0.95);
+  min-height: 100vh;
+  padding: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  color: #1e3c72;
+}
+
+.logout {
+  padding: 8px 15px;
+  background: #1e3c72;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.section {
+  margin-top: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button.primary {
+  background: linear-gradient(90deg, #1e3c72, #2a5298);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.job-item {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.delete-btn {
+  background: crimson;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right;
+}
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+<div class="header">
+<h1>SSSV Hunters - Admin Panel</h1>
+<button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<!-- Post Job -->
+<div class="section card">
+<h2>Post New Job</h2>
+<input type="text" id="jobTitle" placeholder="Job Title">
+<input type="text" id="jobLocation" placeholder="Location">
+<textarea id="jobDesc" placeholder="Job Description"></textarea>
+<button class="primary" onclick="postJob()">Post Job</button>
+</div>
+
+<!-- Job Listings -->
+<div class="section card">
+<h2>All Jobs</h2>
+<div id="jobsContainer"></div>
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+  authDomain: "sssvhunters-jobboard.firebaseapp.com",
+  projectId: "sssvhunters-jobboard",
+  storageBucket: "sssvhunters-jobboard.firebasestorage.app",
+  messagingSenderId: "724150870358",
+  appId: "1:724150870358:web:901c334ce94d530aefb6f7",
+  measurementId: "G-M1R2YQTW20"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const docSnap = await getDoc(doc(db, "users", user.uid));
+  const userData = docSnap.data();
+
+  if (userData.role !== "admin") {
+    window.location.href = "login.html";
+  }
+
+  loadJobs();
+});
+
+async function postJob() {
+  const title = document.getElementById("jobTitle").value;
+  const location = document.getElementById("jobLocation").value;
+  const desc = document.getElementById("jobDesc").value;
+
+  if (!title || !location || !desc) {
+    alert("Fill all fields");
+    return;
+  }
+
+  await addDoc(collection(db, "jobs"), {
+    title,
+    location,
+    description: desc,
+    createdAt: new Date()
+  });
+
+  alert("Job Posted");
+  loadJobs();
+}
+
+async function loadJobs() {
+  const container = document.getElementById("jobsContainer");
+  container.innerHTML = "";
+
+  const querySnapshot = await getDocs(collection(db, "jobs"));
+  querySnapshot.forEach((docSnap) => {
+    const job = docSnap.data();
+
+    container.innerHTML += `
+      <div class="job-item">
+        <strong>${job.title}</strong> - ${job.location}
+        <button class="delete-btn" onclick="deleteJob('${docSnap.id}')">Delete</button>
+      </div>
+    `;
+  });
+}
+
+window.deleteJob = async function(id) {
+  await deleteDoc(doc(db, "jobs", id));
+  loadJobs();
+};
+
+window.logout = function() {
+  signOut(auth).then(() => {
+    window.location.href = "login.html";
+  });
+};
+
+</script>
+
+</body>
+</html>
