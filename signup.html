@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | SSSV Hunters</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background Logo Watermark */
+body::before {
+  content: "";
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  background: url("jpj.jpg") no-repeat center;
+  background-size: contain;
+  opacity: 0.04;
+  z-index: 0;
+}
+
+.signup-container {
+  width: 420px;
+  background: #ffffff;
+  padding: 50px 45px;
+  border-radius: 18px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 1;
+  border-top: 6px solid #0d6efd;
+}
+
+.signup-container h1 {
+  font-size: 26px;
+  color: #0d6efd;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.signup-container p {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+input:focus {
+  border-color: #0d6efd;
+  outline: none;
+  box-shadow: 0 0 8px rgba(13,110,253,0.2);
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #0d6efd, #0096ff);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+#error {
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}
+
+.footer-link {
+  margin-top: 20px;
+  font-size: 13px;
+  text-align: center;
+  color: #555;
+}
+
+.footer-link a {
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="signup-container">
+
+  <h1>Create Account</h1>
+  <p>Candidate Registration Portal</p>
+
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="email" id="email" placeholder="Email Address">
+  <input type="password" id="password" placeholder="Password">
+
+  <button onclick="signup()">Create Account</button>
+
+  <div id="error"></div>
+
+  <div class="footer-link">
+    Already have an account? <a href="login.html">Login</a>
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+  authDomain: "sssvhunters-jobboard.firebaseapp.com",
+  projectId: "sssvhunters-jobboard",
+  storageBucket: "sssvhunters-jobboard.firebasestorage.app",
+  messagingSenderId: "724150870358",
+  appId: "1:724150870358:web:901c334ce94d530aefb6f7",
+  measurementId: "G-M1R2YQTW20"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.signup = async function () {
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      name: name,
+      email: email,
+      role: "candidate"
+    });
+
+    window.location.href = "candidate.html";
+
+  } catch (error) {
+    document.getElementById("error").innerText = error.message;
+  }
+
+}
+
+</script>
+
+</body>
+</html>
