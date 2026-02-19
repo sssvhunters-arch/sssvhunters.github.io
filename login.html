@@ -1,137 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SSSV Hunters | Secure Access</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-
-body{
-  background: linear-gradient(rgba(255,255,255,0.94), rgba(255,255,255,0.94)),
-              url("bg.jpg") no-repeat center center/cover;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url("bg.jpg") no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.container{
-  width:420px;
-  background:white;
-  padding:40px;
-  border-radius:16px;
-  box-shadow:0 20px 50px rgba(0,0,0,0.1);
+.card {
+  background: rgba(255,255,255,0.95);
+  padding: 35px;
+  width: 380px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
 
-.logo{
-  text-align:center;
-  font-size:26px;
-  font-weight:700;
-  color:#1d4ed8;
-  margin-bottom:25px;
+h2 { text-align: center; margin-bottom: 20px; }
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-.tabs{
-  display:flex;
-  margin-bottom:20px;
+button {
+  width: 100%;
+  padding: 12px;
+  background: #1e3c72;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.tabs button{
-  flex:1;
-  padding:12px;
-  border:none;
-  cursor:pointer;
-  font-weight:600;
-  background:#f1f5f9;
-}
-
-.tabs button.active{
-  background:#1d4ed8;
-  color:white;
-}
-
-input{
-  width:100%;
-  padding:12px;
-  margin-bottom:15px;
-  border-radius:8px;
-  border:1px solid #ddd;
-}
-
-button.submit{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:8px;
-  background:linear-gradient(90deg,#1d4ed8,#2563eb);
-  color:white;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button.submit:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.1);
-}
-
-.error{
-  color:red;
-  font-size:13px;
-  text-align:center;
-  margin-bottom:10px;
-}
-
-.success{
-  color:green;
-  font-size:13px;
-  text-align:center;
-  margin-bottom:10px;
+.error {
+  color: crimson;
+  text-align: center;
+  margin-top: 10px;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="card">
+<h2>SSSV HUNTERS</h2>
 
-<div class="logo">SSSV HUNTERS</div>
-
-<div class="tabs">
-  <button id="loginTab" class="active">Login</button>
-  <button id="signupTab">Sign Up</button>
-</div>
-
-<div id="message"></div>
-
-<input type="text" id="fullName" placeholder="Full Name" style="display:none;">
-<input type="email" id="email" placeholder="Email Address">
+<input type="email" id="email" placeholder="Email">
 <input type="password" id="password" placeholder="Password">
-
-<button class="submit" id="actionBtn">Secure Login</button>
-
+<button onclick="secureLogin()">Secure Login</button>
+<p class="error" id="errorMsg"></p>
 </div>
 
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-/* 🔥 REPLACE WITH YOUR REAL CONFIG */
 const firebaseConfig = {
  apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
   authDomain: "sssvhunters-jobboard.firebaseapp.com",
@@ -146,96 +83,82 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let mode = "login";
+let loginAttempts = 0;
+const MAX_ATTEMPTS = 5;
 
-const loginTab = document.getElementById("loginTab");
-const signupTab = document.getElementById("signupTab");
-const fullName = document.getElementById("fullName");
-const actionBtn = document.getElementById("actionBtn");
-const message = document.getElementById("message");
-
-loginTab.onclick = () => {
-  mode="login";
-  loginTab.classList.add("active");
-  signupTab.classList.remove("active");
-  fullName.style.display="none";
-  actionBtn.innerText="Secure Login";
-  message.innerHTML="";
-};
-
-signupTab.onclick = () => {
-  mode="signup";
-  signupTab.classList.add("active");
-  loginTab.classList.remove("active");
-  fullName.style.display="block";
-  actionBtn.innerText="Create Account";
-  message.innerHTML="";
-};
-
-function strongPassword(password){
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-  return regex.test(password);
-}
-
-actionBtn.onclick = async () => {
+window.secureLogin = async function() {
 
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
+  const errorMsg = document.getElementById("errorMsg");
 
-  message.innerHTML="";
+  errorMsg.textContent = "";
 
-  try{
-
-    if(mode==="signup"){
-
-      if(!strongPassword(password)){
-        throw new Error("Password must be 8+ chars, include upper, lower, number & symbol.");
-      }
-
-      const userCredential = await createUserWithEmailAndPassword(auth,email,password);
-
-      await sendEmailVerification(userCredential.user);
-
-      await setDoc(doc(db,"users",userCredential.user.uid),{
-        fullName: fullName.value.trim(),
-        role: "candidate",
-        createdAt: new Date()
-      });
-
-      message.innerHTML="<div class='success'>Account created. Verify email before login.</div>";
-
-      await signOut(auth);
-    }
-
-    if(mode==="login"){
-
-      const userCredential = await signInWithEmailAndPassword(auth,email,password);
-
-      if(!userCredential.user.emailVerified){
-        await signOut(auth);
-        throw new Error("Verify your email first.");
-      }
-
-      const userDoc = await getDoc(doc(db,"users",userCredential.user.uid));
-
-      if(!userDoc.exists()){
-        throw new Error("User data not found.");
-      }
-
-      const role = userDoc.data().role;
-
-      if(role==="admin"){
-        window.location.href="admin-dashboard.html";
-      }else{
-        window.location.href="candidate-dashboard.html";
-      }
-    }
-
-  }catch(err){
-    message.innerHTML="<div class='error'>"+err.message+"</div>";
+  if (!email || !password) {
+    errorMsg.textContent = "Invalid credentials.";
+    return;
   }
 
+  if (loginAttempts >= MAX_ATTEMPTS) {
+    errorMsg.textContent = "Too many attempts. Try later.";
+    return;
+  }
+
+  try {
+
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // 1️⃣ Email verification enforcement
+    if (!user.emailVerified) {
+      await signOut(auth);
+      errorMsg.textContent = "Verify email before login.";
+      return;
+    }
+
+    // 2️⃣ Role validation
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+
+    if (!userDoc.exists()) {
+      await signOut(auth);
+      errorMsg.textContent = "Access denied.";
+      return;
+    }
+
+    const role = userDoc.data().role;
+
+    if (role === "admin") {
+      window.location.href = "admin-dashboard.html";
+    } else if (role === "candidate") {
+      window.location.href = "candidate-dashboard.html";
+    } else {
+      await signOut(auth);
+      errorMsg.textContent = "Unauthorized role.";
+    }
+
+  } catch (error) {
+
+    loginAttempts++;
+    errorMsg.textContent = "Invalid credentials.";
+
+  }
 };
+
+// 3️⃣ Session auto logout after 15 min
+let timeout;
+
+function resetTimer() {
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    signOut(auth).then(() => {
+      window.location.href = "login.html";
+    });
+  }, 15 * 60 * 1000);
+}
+
+window.onload = resetTimer;
+document.onmousemove = resetTimer;
+document.onkeypress = resetTimer;
 
 </script>
 
