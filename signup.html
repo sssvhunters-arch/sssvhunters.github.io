@@ -3,114 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Account | SSSV Hunters</title>
+<title>SSSV Hunters | Create Account</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+
+body{
+margin:0;
+font-family:Arial;
+background:url("bg.jpg") no-repeat center center/cover;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-body {
-  height: 100vh;
-  background: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
+.card{
+background:rgba(255,255,255,0.95);
+padding:40px;
+width:400px;
+border-radius:12px;
+box-shadow:0 10px 40px rgba(0,0,0,0.25);
 }
 
-/* Background Logo Watermark */
-body::before {
-  content: "";
-  position: absolute;
-  width: 700px;
-  height: 700px;
-  background: url("jpj.jpg") no-repeat center;
-  background-size: contain;
-  opacity: 0.04;
-  z-index: 0;
+h2{
+text-align:center;
+margin-bottom:20px;
+color:#1e3c72;
 }
 
-.signup-container {
-  width: 420px;
-  background: #ffffff;
-  padding: 50px 45px;
-  border-radius: 18px;
-  box-shadow: 0 25px 70px rgba(0,0,0,0.08);
-  position: relative;
-  z-index: 1;
-  border-top: 6px solid #0d6efd;
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
-.signup-container h1 {
-  font-size: 26px;
-  color: #0d6efd;
-  margin-bottom: 8px;
-  letter-spacing: 1px;
+button{
+width:100%;
+padding:12px;
+background:#1e3c72;
+color:white;
+border:none;
+border-radius:6px;
+font-weight:bold;
+cursor:pointer;
 }
 
-.signup-container p {
-  color: #777;
-  font-size: 14px;
-  margin-bottom: 30px;
+button:hover{
+background:#16305c;
 }
 
-input {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 18px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-size: 15px;
-  transition: 0.3s;
+.msg{
+text-align:center;
+margin-top:10px;
+color:red;
 }
 
-input:focus {
-  border-color: #0d6efd;
-  outline: none;
-  box-shadow: 0 0 8px rgba(13,110,253,0.2);
+.success{
+color:green;
 }
 
-button {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #0d6efd, #0096ff);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
-}
-
-#error {
-  margin-top: 10px;
-  color: red;
-  font-size: 14px;
-  text-align: center;
-}
-
-.footer-link {
-  margin-top: 20px;
-  font-size: 13px;
-  text-align: center;
-  color: #555;
-}
-
-.footer-link a {
-  color: #0d6efd;
-  text-decoration: none;
-  font-weight: 600;
+a{
+color:#1e3c72;
+font-weight:bold;
 }
 
 </style>
@@ -118,33 +74,49 @@ button:hover {
 
 <body>
 
-<div class="signup-container">
+<div class="card">
 
-  <h1>Create Account</h1>
-  <p>Candidate Registration Portal</p>
+<h2>SSSV Hunters Signup</h2>
 
-  <input type="text" id="name" placeholder="Full Name">
-  <input type="email" id="email" placeholder="Email Address">
-  <input type="password" id="password" placeholder="Password">
+<input id="name" placeholder="Full Name">
+<input id="email" type="email" placeholder="Email Address">
+<input id="password" type="password" placeholder="Password">
 
-  <button onclick="signup()">Create Account</button>
+<button id="signupBtn">Create Secure Account</button>
 
-  <div id="error"></div>
+<p class="msg" id="message"></p>
 
-  <div class="footer-link">
-    Already have an account? <a href="login.html">Login</a>
-  </div>
+<p style="text-align:center;margin-top:15px;">
+Already registered?
+<a href="login.html">Login</a>
+</p>
 
 </div>
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
-const firebaseConfig = {
- apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+import {
+getAuth,
+createUserWithEmailAndPassword,
+sendEmailVerification,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* 🔥 PUT YOUR REAL CONFIG */
+const firebaseConfig={
+apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
   authDomain: "sssvhunters-jobboard.firebaseapp.com",
   projectId: "sssvhunters-jobboard",
   storageBucket: "sssvhunters-jobboard.firebasestorage.app",
@@ -153,34 +125,62 @@ const firebaseConfig = {
   measurementId: "G-M1R2YQTW20"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-window.signup = async function () {
+const message=document.getElementById("message");
 
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  try {
-
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    await setDoc(doc(db, "users", user.uid), {
-      name: name,
-      email: email,
-      role: "candidate"
-    });
-
-    window.location.href = "candidate.html";
-
-  } catch (error) {
-    document.getElementById("error").innerText = error.message;
-  }
-
+function strongPassword(password){
+return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password);
 }
+
+document.getElementById("signupBtn")
+.addEventListener("click",async()=>{
+
+const name=document.getElementById("name").value.trim();
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value.trim();
+
+message.innerText="";
+
+if(!name || !email || !password){
+message.innerText="All fields required.";
+return;
+}
+
+if(!strongPassword(password)){
+message.innerText=
+"Password must contain uppercase, lowercase, number & symbol.";
+return;
+}
+
+try{
+
+const userCred=
+await createUserWithEmailAndPassword(auth,email,password);
+
+await sendEmailVerification(userCred.user);
+
+/* STORE USER ROLE */
+await setDoc(doc(db,"users",userCred.user.uid),{
+name:name,
+email:email,
+role:"candidate",
+createdAt:serverTimestamp()
+});
+
+await signOut(auth);
+
+message.classList.add("success");
+message.innerText=
+"Account created ✅ Verify email before login.";
+
+}catch(err){
+message.innerText="Signup failed.";
+}
+
+});
 
 </script>
 
