@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -19,11 +20,11 @@ align-items:center;
 }
 
 .card{
-background:rgba(255,255,255,0.95);
+background:rgba(255,255,255,.96);
 padding:40px;
 width:420px;
 border-radius:12px;
-box-shadow:0 10px 40px rgba(0,0,0,.3);
+box-shadow:0 10px 40px rgba(0,0,0,.35);
 }
 
 h2{text-align:center;}
@@ -85,17 +86,21 @@ color:red;
 <button id="signupTab">Sign Up</button>
 </div>
 
-<input id="name" placeholder="Full Name" style="display:none">
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
+<input id="nameInput" placeholder="Full Name" style="display:none">
+<input id="emailInput" placeholder="Email">
+<input id="passwordInput" type="password" placeholder="Password">
 
-<button class="main" id="actionBtn">Secure Login</button>
+<button class="main" id="actionBtn">
+Secure Login
+</button>
 
 <p id="msg" class="msg"></p>
 
 </div>
 
 <script type="module">
+
+/* ================= FIREBASE ================= */
 
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -105,6 +110,7 @@ getAuth,
 createUserWithEmailAndPassword,
 signInWithEmailAndPassword,
 sendEmailVerification,
+onAuthStateChanged,
 signOut
 }
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
@@ -118,32 +124,63 @@ serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* PUT REAL CONFIG */
+
 const firebaseConfig={
-apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
-  authDomain: "sssvhunters-jobboard.firebaseapp.com",
-  projectId: "sssvhunters-jobboard",
-  storageBucket: "sssvhunters-jobboard.firebasestorage.app",
-  messagingSenderId: "724150870358",
-  appId: "1:724150870358:web:901c334ce94d530aefb6f7",
-  measurementId: "G-M1R2YQTW20"
+apiKey:"AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+authDomain:"sssvhunters-jobboard.firebaseapp.com",
+projectId:"sssvhunters-jobboard",
+storageBucket:"sssvhunters-jobboard.appspot.com",
+messagingSenderId:"724150870358",
+appId:"1:724150870358:web:901c334ce94d530aefb6f7"
 };
 
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
+/* ================= ELEMENTS ================= */
+
 let mode="login";
 
-const nameInput=document.getElementById("name");
+const loginTab=document.getElementById("loginTab");
+const signupTab=document.getElementById("signupTab");
+
+const nameInput=document.getElementById("nameInput");
+const emailInput=document.getElementById("emailInput");
+const passwordInput=document.getElementById("passwordInput");
+
+const actionBtn=document.getElementById("actionBtn");
 const msg=document.getElementById("msg");
 
-/* TAB SWITCH */
+/* ================= AUTO SESSION LOGIN ================= */
+
+onAuthStateChanged(auth, async(user)=>{
+
+if(!user) return;
+
+if(!user.emailVerified) return;
+
+const snap=
+await getDoc(doc(db,"users",user.uid));
+
+if(!snap.exists()) return;
+
+const role=snap.data().role;
+
+if(role==="admin")
+location.href="admin-dashboard.html";
+else
+location.href="candidate-dashboard.html";
+
+});
+
+/* ================= TAB SWITCH ================= */
 
 loginTab.onclick=()=>{
 mode="login";
 loginTab.classList.add("active");
 signupTab.classList.remove("active");
+
 nameInput.style.display="none";
 actionBtn.innerText="Secure Login";
 };
@@ -152,29 +189,37 @@ signupTab.onclick=()=>{
 mode="signup";
 signupTab.classList.add("active");
 loginTab.classList.remove("active");
+
 nameInput.style.display="block";
 actionBtn.innerText="Create Account";
 };
 
-/* PASSWORD SECURITY */
+/* ================= PASSWORD CHECK ================= */
 
 function strongPassword(p){
 return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(p);
 }
 
-/* MAIN AUTH */
+/* ================= AUTH SYSTEM ================= */
 
 actionBtn.addEventListener("click",async()=>{
 
-const name=nameInput.value.trim();
-const email=email.value.trim();
-const password=password.value.trim();
-
 msg.innerText="";
+
+const name=nameInput.value.trim();
+const email=emailInput.value.trim();
+const password=passwordInput.value.trim();
 
 try{
 
+/* ---------- SIGNUP ---------- */
+
 if(mode==="signup"){
+
+if(!name){
+msg.innerText="Enter name.";
+return;
+}
 
 if(!strongPassword(password)){
 msg.innerText="Weak password.";
@@ -195,14 +240,14 @@ createdAt:serverTimestamp()
 
 await signOut(auth);
 
-msg.classList.add("success");
-msg.innerText="Account created. Verify email.";
+msg.className="msg success";
+msg.innerText=
+"Account created. Verify email before login.";
 
+return;
 }
 
-/* LOGIN */
-
-if(mode==="login"){
+/* ---------- LOGIN ---------- */
 
 const userCred=
 await signInWithEmailAndPassword(auth,email,password);
@@ -230,14 +275,15 @@ location.href="admin-dashboard.html";
 else
 location.href="candidate-dashboard.html";
 
-}
+}catch(e){
 
-}catch{
 msg.innerText="Authentication failed.";
+
 }
 
 });
 
 </script>
+
 </body>
 </html>
