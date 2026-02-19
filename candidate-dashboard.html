@@ -198,7 +198,27 @@ body{
 <script type="module">
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+const firebaseConfig = {
+ apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+  authDomain: "sssvhunters-jobboard.firebaseapp.com",
+  projectId: "sssvhunters-jobboard",
+  storageBucket: "sssvhunters-jobboard.firebasestorage.app",
+  messagingSenderId: "724150870358",
+  appId: "1:724150870358:web:901c334ce94d530aefb6f7",
+  measurementId: "G-M1R2YQTW20"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
 const firebaseConfig = {
   apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
   authDomain: "sssvhunters-jobboard.firebaseapp.com",
