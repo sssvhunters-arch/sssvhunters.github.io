@@ -1,203 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SSSV Hunters | Admin Dashboard</title>
+<title>Admin Dashboard</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
+
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
 }
 
-body {
-  background: url("bg.jpg") no-repeat center center/cover;
-  backdrop-filter: blur(6px);
-  min-height: 100vh;
+header{
+padding:20px;
+background:#1e293b;
+display:flex;
+justify-content:space-between;
 }
 
-.overlay {
-  background: rgba(255,255,255,0.95);
-  min-height: 100vh;
-  padding: 30px;
+.container{
+padding:30px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+input,textarea{
+width:100%;
+padding:10px;
+margin:8px 0;
 }
 
-.header h1 {
-  color: #1e3c72;
+button{
+padding:10px 15px;
+background:#2563eb;
+border:none;
+color:white;
+cursor:pointer;
 }
 
-.logout {
-  padding: 8px 15px;
-  background: #1e3c72;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+.job{
+background:#1e293b;
+padding:15px;
+margin-top:10px;
+border-radius:8px;
 }
 
-.section {
-  margin-top: 30px;
-}
-
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-}
-
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-button.primary {
-  background: linear-gradient(90deg, #1e3c72, #2a5298);
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.job-item {
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-}
-
-.delete-btn {
-  background: crimson;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  float: right;
-}
 </style>
 </head>
 
 <body>
-<div class="overlay">
 
-<div class="header">
-<h1>SSSV Hunters - Admin Panel</h1>
-<button class="logout" onclick="logout()">Logout</button>
-</div>
+<header>
+<h2>Admin Panel</h2>
+<button id="logout">Logout</button>
+</header>
 
-<!-- Post Job -->
-<div class="section card">
-<h2>Post New Job</h2>
-<input type="text" id="jobTitle" placeholder="Job Title">
-<input type="text" id="jobLocation" placeholder="Location">
-<textarea id="jobDesc" placeholder="Job Description"></textarea>
-<button class="primary" onclick="postJob()">Post Job</button>
-</div>
+<div class="container">
 
-<!-- Job Listings -->
-<div class="section card">
-<h2>All Jobs</h2>
-<div id="jobsContainer"></div>
-</div>
+<h3>Create Job</h3>
+
+<input id="title" placeholder="Job Title">
+<input id="location" placeholder="Location">
+<textarea id="desc" placeholder="Description"></textarea>
+
+<button id="postJob">Post Job</button>
+
+<hr>
+
+<h3>All Jobs</h3>
+<div id="jobs"></div>
 
 </div>
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
-  authDomain: "sssvhunters-jobboard.firebaseapp.com",
-  projectId: "sssvhunters-jobboard",
-  storageBucket: "sssvhunters-jobboard.firebasestorage.app",
-  messagingSenderId: "724150870358",
-  appId: "1:724150870358:web:901c334ce94d530aefb6f7",
-  measurementId: "G-M1R2YQTW20"
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc,
+query,
+where,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* CONFIG */
+const firebaseConfig={
+apiKey:"YOUR_KEY",
+authDomain:"YOUR_DOMAIN",
+projectId:"sssvhunters-jobboard"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+let currentTenant=null;
 
-  const docSnap = await getDoc(doc(db, "users", user.uid));
-  const userData = docSnap.data();
+/* AUTH PROTECTION */
 
-  if (userData.role !== "admin") {
-    window.location.href = "login.html";
-  }
+onAuthStateChanged(auth,async(user)=>{
 
-  loadJobs();
+if(!user){
+location.href="auth.html";
+return;
+}
+
+/* LOAD TENANT */
+currentTenant="sssv_hunters";
+
+loadJobs();
+
 });
 
-async function postJob() {
-  const title = document.getElementById("jobTitle").value;
-  const location = document.getElementById("jobLocation").value;
-  const desc = document.getElementById("jobDesc").value;
+/* CREATE JOB */
 
-  if (!title || !location || !desc) {
-    alert("Fill all fields");
-    return;
-  }
+postJob.onclick=async()=>{
 
-  await addDoc(collection(db, "jobs"), {
-    title,
-    location,
-    description: desc,
-    createdAt: new Date()
-  });
+await addDoc(
+collection(db,
+"tenants",
+currentTenant,
+"jobs"
+),
+{
+title:title.value,
+location:location.value,
+description:desc.value,
+status:"active",
+createdAt:serverTimestamp()
+});
 
-  alert("Job Posted");
-  loadJobs();
-}
+loadJobs();
 
-async function loadJobs() {
-  const container = document.getElementById("jobsContainer");
-  container.innerHTML = "";
-
-  const querySnapshot = await getDocs(collection(db, "jobs"));
-  querySnapshot.forEach((docSnap) => {
-    const job = docSnap.data();
-
-    container.innerHTML += `
-      <div class="job-item">
-        <strong>${job.title}</strong> - ${job.location}
-        <button class="delete-btn" onclick="deleteJob('${docSnap.id}')">Delete</button>
-      </div>
-    `;
-  });
-}
-
-window.deleteJob = async function(id) {
-  await deleteDoc(doc(db, "jobs", id));
-  loadJobs();
 };
 
-window.logout = function() {
-  signOut(auth).then(() => {
-    window.location.href = "login.html";
-  });
+/* LOAD JOBS */
+
+async function loadJobs(){
+
+jobs.innerHTML="Loading...";
+
+const q =
+collection(db,
+"tenants",
+currentTenant,
+"jobs"
+);
+
+const snap=await getDocs(q);
+
+jobs.innerHTML="";
+
+snap.forEach(d=>{
+
+const job=d.data();
+
+jobs.innerHTML+=`
+
+<div class="job">
+<h4>${job.title}</h4>
+<p>${job.location}</p>
+<button onclick="deleteJob('${d.id}')">
+Delete
+</button>
+</div>
+
+`;
+
+});
+
+}
+
+/* DELETE */
+
+window.deleteJob=async(id)=>{
+
+await deleteDoc(
+doc(db,
+"tenants",
+currentTenant,
+"jobs",
+id
+));
+
+loadJobs();
+
+};
+
+/* LOGOUT */
+
+logout.onclick=()=>{
+signOut(auth);
+location.href="auth.html";
 };
 
 </script>
