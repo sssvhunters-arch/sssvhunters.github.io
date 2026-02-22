@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSSVHUNTERS | Elite Talent Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --gold: #b45309;
+            --bg: #f8fafc;
+            --border: #e2e8f0;
+            --premium-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse-soft {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg); color: var(--primary); overflow-x: hidden; }
+
+        /* --- TOP NAVIGATION --- */
+        header {
+            padding: 1.2rem 8%;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+        }
+        .back-btn { 
+            text-decoration: none; 
+            color: var(--primary); 
+            font-weight: 700; 
+            font-size: 0.85rem;
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .back-btn:hover { color: var(--accent); transform: translateX(-5px); }
+        
+        .logo-premium { text-align: right; }
+        .logo-premium span {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 6px 18px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .brand-subtext { font-size: 0.65rem; font-weight: 800; color: var(--gold); text-transform: uppercase; margin-top: 4px; letter-spacing: 1px; }
+
+        /* --- SEARCH & CALL TO ACTION --- */
+        .container { max-width: 1300px; margin: 3rem auto; padding: 0 20px; animation: fadeInUp 0.8s ease-out; }
+        
+        .premium-banner {
+            background: var(--premium-gradient);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-banner::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+        }
+        .premium-banner h2 { font-size: 2.2rem; margin-bottom: 15px; font-weight: 800; letter-spacing: -0.5px; }
+        
+        .whatsapp-link {
+            color: #fbbf24;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: 50px;
+        }
+        .whatsapp-link:hover { background: rgba(251, 191, 36, 0.2); transform: translateY(-2px); }
+
+        .search-bar-container { margin-bottom: 2.5rem; position: relative; }
+        #searchInput { 
+            width: 100%; 
+            padding: 24px 35px; 
+            border-radius: 100px; 
+            border: 1px solid var(--border); 
+            font-size: 1.1rem; 
+            outline: none; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.4s;
+        }
+        #searchInput:focus { border-color: var(--accent); box-shadow: 0 15px 35px rgba(37, 99, 235, 0.12); }
+        .stats-badge {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #f1f5f9;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        /* --- MAIN LAYOUT --- */
+        .main-layout { display: grid; grid-template-columns: 1fr 340px; gap: 40px; }
+
+        /* --- PREMIUM TABLE --- */
+        .table-card {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .scroll-box { max-height: 800px; overflow-y: auto; scroll-behavior: smooth; }
+        table { width: 100%; border-collapse: collapse; }
+        th { 
+            background: #f8fafc; 
+            padding: 22px 20px; 
+            text-align: left; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px;
+            color: #64748b;
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0;
+            z-index: 10;
+        }
+        tr { transition: 0.3s; }
+        tr:hover { background-color: #f1f5f9; transform: scale(1.002); cursor: pointer; }
+        td { padding: 22px 20px; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; }
+        
+        .name-cell { font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 8px; }
+        .verified-badge { color: #3b82f6; font-size: 0.8rem; }
+        
+        .job-title { color: #475569; font-weight: 600; font-size: 0.9rem; }
+        .visa-tag { padding: 5px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; border: 1px solid transparent; }
+        
+        .locked-cell { 
+            color: #94a3b8; 
+            font-size: 0.8rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+            background: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 8px;
+            width: fit-content;
+        }
+        .locked-cell i { color: #fbbf24; animation: pulse-soft 2s infinite; }
+
+        /* --- SIDEBAR --- */
+        .premium-sidebar {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            text-align: center;
+            position: sticky; top: 120px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+            transition: 0.3s;
+        }
+        .premium-sidebar:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
+        .gold-icon { font-size: 3.5rem; color: #fbbf24; margin-bottom: 25px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        
+        .btn-premium {
+            background: #000;
+            color: #fff;
+            padding: 18px;
+            border-radius: 14px;
+            text-decoration: none;
+            display: block;
+            font-weight: 800;
+            margin-top: 30px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .btn-premium:hover { background: var(--accent); transform: scale(1.05); }
+
+        /* --- ASSESSMENT TILE --- */
+        .assessment-section { margin-top: 80px; }
+        .assessment-tile {
+            background: var(--premium-gradient);
+            color: white;
+            padding: 50px;
+            border-radius: 24px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: 0.4s;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+        .assessment-tile:hover { transform: translateY(-5px); box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
+        .assessment-tile h3 { font-size: 2rem; margin-bottom: 12px; font-weight: 800; }
+        
+        footer { margin-top: 100px; padding-bottom: 60px; text-align: center; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid var(--border); padding-top: 40px; }
+
+        @media (max-width: 1000px) {
+            .main-layout { grid-template-columns: 1fr; }
+            header { padding: 1rem 5%; }
+            .premium-banner h2 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> RETURN TO PORTAL</a>
+        <div class="logo-premium">
+            <span>SSSVHUNTERS</span>
+            <div class="brand-subtext">Elite Talent Acquisition</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="premium-banner">
+            <h2>Elite Candidate Network</h2>
+            <p style="margin-bottom: 25px; opacity: 0.9; font-size: 1.1rem;">Instant access to the top 1% of the global talent pool with direct contact details.</p>
+            <a href="https://wa.me/918448471857?text=Hello%20SSSV%20Hunters,%20I%20am%20a%20Recruiter%20interested%20in%20unlocking%20Premium%20Talent%20Access%20for%20complete%20profiles." class="whatsapp-link">
+                <i class="fab fa-whatsapp"></i> Unlock LinkedIn & Contact Info with complete profile→
+            </a>
+        </div>
+        
+        <div class="search-bar-container">
+            <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search by Consultant, Skill, or Visa Status...">
+            <div class="stats-badge"><i class="fas fa-users"></i> 1.2B+ Candidates Globally</div>
+        </div>
+
+        <div class="main-layout">
+            <div class="table-card">
+                <div class="scroll-box">
+                    <table id="candidateTable">
+                        <thead>
+                            <tr>
+                                <th>Consultant</th>
+                                <th>Professional Role</th>
+                                <th>Visa status</th>
+                                <th>LinkedIn</th>
+                                <th>Resume</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <aside class="premium-sidebar">
+                <div class="gold-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3 style="font-weight: 800; font-size: 1.2rem; margin-bottom: 10px;">Premium Verification</h3>
+                <p style="font-size: 0.85rem; color: #64748b; line-height: 1.6;">Our candidates are pre-vetted for technical accuracy and communication excellence.</p>
+                <a href="https://wa.me/918448471857?text=Premium%20Membership%20Inquiry" class="btn-premium">Access Hunter Premium</a>
+            </aside>
+        </div>
+
+        <div class="assessment-section">
+            <a href="assessment.html" class="assessment-tile">
+                <h3>Certified SSSV Recruiter Program</h3>
+                <p style="opacity: 0.8; max-width: 600px; margin: 0 auto;">Validate your recruitment expertise and gain exclusive rights to represent our premier talent bench.</p>
+            </a>
+        </div>
+        
+        <footer>
+            <p>© 2026 SSSV HUNTERS Global Network. All Rights Reserved. <br> Private Access Only.</p>
+        </footer>
+    </div>
+
+    <script>
+        const rawData = [
+            ["Eshwar Janjirala", "Lead Network Engineer", "OPT-EAD"],
+            ["Sudeep Battineni", "Senior QA Engineer", "H1B"],
+            ["Abhishek Trivedi", "Principal Network Engineer", "GC"],
+            ["Jayasri Pitti", "Cyber Security Analyst", "OPT-EAD"],
+            ["Neha Vujjeni", "Business Systems Analyst", "N/A"],
+            ["Kodavanti Ramesh", "Senior Product Manager", "TN"],
+            ["Harshini Gangula", "Business Strategy Analyst", "OPT-EAD"],
+            ["sivaramaiah Kolla", "Senior Data Engineer", "H1B"],
+            ["Sundeep Yarlagadda", "Big Data Architect", "H1B"],
+            ["Naveen Raj", "Lead Data Engineer", "H1B"],
+            ["Vijayvargiya Tarun", "Product Strategy Lead", "H1B"],
+            ["Sandeep Reddy Devarapally", "Data Solutions Engineer", "OPT-EAD"],
+            ["Suresh Kesavan", "Senior Program Manager", "E3"],
+            ["Sai Kiran Thampari", "Java Fullstack Developer", "H1B"],
+            ["Himabindu Katipalli", "AWS Data Engineer", "H4-EAD"],
+            ["SHRAY GILOTRA", "Financial Analyst", "H1B"],
+            ["Vasireddy Bala Subramanyam", "Senior Product Owner", "H1B"],
+            ["Srilaxmi Singamaneni", "Technical BA", "L2"],
+            ["Sridevi Akula", "Senior Product Architect", "H1B"],
+            ["Narendra", "ETL Data Engineer", "H4-EAD"],
+            ["Madhusudhan Reddy Dumpa", "Workday Consultant", "H1B"],
+            ["Chakravarthi Nagabhyru", "Data Analytics Engineer", "OPT"],
+            ["Swati Chauhan", "Mechanical Design Engineer", "H1B"],
+            ["Prashanth Reddy", "Java Backend Developer", "OPT"],
+            ["Sahithi Akkala", "Workday Systems Analyst", "H1B"],
+            ["Usha Rani Jongari", "Core Java Developer", "H1B"],
+            ["Sachin Ganji Devendrappa", "Automation QA Lead", "H1B"],
+            ["Naveen Kumar", "Senior Java Engineer", "OPT"],
+            ["Bhupathi Naidu Chintagumpala", "Cisco Network Specialist", "OPT"],
+            ["Abbas Syed", "Network Infrastructure Engineer", "OPT"],
+            ["LOKESH SUVVA", "Fullstack Developer", "H1B"],
+            ["Dandan Ren", "Lead Java Developer", "H1B"],
+            ["Anudeep Sanka", "Enterprise Java Architect", "H1B"],
+            ["Charan Reddy", "SCM Business Analyst", "OPT"],
+            ["Pavani Gadapa", "Logistics Analyst", "OPT-EAD"],
+            ["Shahana Farooqui", "Operations Analyst", "USC"],
+            ["Palagiri Bala Ravi Teja Reddy", "AI Research Engineer", "GC"],
+            ["Srikar Balmuri", "Machine Learning Engineer", "OPT"],
+            ["Lasya LakhamRaju", "Data Warehouse Engineer", "H1B"],
+            ["Nikhil Reddy", "DevOps Architect", "H1B"],
+            ["Dinesh Ravilla", "Embedded Systems Lead", "H1B"],
+            ["Swetha Damerauppula", "Cloud DevOps Engineer", "OPT"],
+            ["Pratheep Shanmugaraj Panneer Selvam", "SDET Engineer", "H1B"],
+            ["chandrakanth Deshamaina", "Senior DevOps Specialist", "GC"],
+            ["Thiruveedhi sai kiran kumar", "Firmware Engineer", "OPT"],
+            ["BHARATH VEMPATI", "Embedded Software Engineer", "OPT"],
+            ["Abhinav Kotla", "Infrastructure Automator", "OPT"],
+            ["CHENNAVENKATANAGAS MANDALI", "QA Testing Lead", "H4-EAD"],
+            ["Mohammad Mushtaq Galub", "SRE / DevOps Engineer", "OPT"],
+            ["Mohammed Feroz, Shaik", "Hardware Design Engineer", "OPT"],
+            ["Soundharya Dharmapuri", "Manual & Automation QA", "OPT"],
+            ["Sudhakar Reddy Venna", "Software Tester (QA)", "OPT"],
+            ["Rahul Kovuri", "SDET / QA Specialist", "H1B"],
+            ["Ishwaq Kottakota Mohammad", "Senior QA Tester", "H4 EAD"],
+            ["Raumik Patel", "Enterprise System Engineer", "GC"],
+            ["SHIVAPRASAD REDDY KOLLU", "Linux System Engineer", "H1B"],
+            ["James Anthony Asleson", "Validation Specialist", "USC"],
+            ["Akshitha Thorlikonda", "CSV Validation Engineer", "H1B"],
+            ["Syed Ibraiz Qazi", "Software QA Engineer", "OPT"],
+            ["Mohsen Roman Edjlali", "Performance QA Lead", "H1B"],
+            ["Pradeep Shivakoti", "QA Lead", "H1B"],
+            ["Nishita Reddy Ponagandla", "Fullstack Java Dev", "H4-EAD"],
+            ["Praveen Thota", "Lead Java Specialist", "H1B"],
+            ["Saurabh Patil", "Backend Developer", "H1B"],
+            ["Hemalatha Singam", "J2EE Developer", "H4EAD"],
+            ["Arpit Girishbhai Patel", "Software Engineer", "N/A"],
+            ["Surya Teja Gadde", "Springboot Specialist", "STEM-OPT"],
+            ["Rajkumar Murugan", "Enterprise Architect", "H1B"],
+            ["Teja koppaka", "Kubernetes Specialist", "H1B"],
+            ["Asha Birajdar", "Platform Engineer", "H1B"],
+            ["Suresh Shivva", "Cloud Infrastructure Lead", "H1B"],
+            ["Venkata Nagendra Babu Kanchugantla", "AWS Cloud Lead", "H1B"],
+            ["vijay yerramsetti", "Senior Site Reliability", "H1B"],
+            ["Anmisha Rampi", "Network Operations", "H1B"],
+            ["Mohammed Siddiqui", "Azure Cloud Architect", "H1B"],
+            ["Aftab Fahad", "Cloud Systems Admin", "GC-EAD"],
+            ["SHARANYA CHANDA", "ASP.NET Developer", "OPT"],
+            ["Yaswanth Kumar Bollineni", "Dot Net Core Dev", "OPT"],
+            ["Himaja Gosangari", "C# Programmer", "OPT"],
+            ["Mansoor shaik", "Data Governance Lead", "H1B"],
+            ["Sravanthi Kolas Rathod", "Data Science Lead", "H1B"],
+            ["Rahul Kendra", "Lead Data Modeler", "H1B"],
+            ["Dhana Shree Shinde", "Fullstack .NET Engineer", "OPT"],
+            ["Alekhya Pasam", "UI / .NET Developer", "OPT"],
+            ["Punit Giri", "SAP EWM Consultant", "OPT"],
+            ["Satyaveni Putta", "Backend .NET Developer", "OPT"],
+            ["Ram Burri", "Software Developer", "OPT"],
+            ["SOHAIL SYED", "IT Support Specialist", "GC EAD"],
+            ["Akhila Yadav Muntha", "Dot Net Engineer", "H1B"],
+            ["Sasi Kumar Kudimi", "Salesforce Architect", "OPT"],
+            ["Sai Vamshi Pasham", "SFDC Consultant", "OPT"],
+            ["Pavan Kumar", "Lead .NET Developer", "H1B"],
+            ["Nidhi Sodhani", "ServiceNow Architect", "H4 EAD"],
+            ["Vijayalakshmi Bhavana", "Web Developer", "H1B"],
+            ["Prashanth Reddy Bhoomkam", "Applications Developer", "H1-B"],
+            ["Pradeep Pandurang Gawas", "Senior .NET Specialist", "H1B"],
+            ["Pooja Singh", "ServiceNow Lead", "GC"],
+            ["Sripriya Annepu", "ServiceNow Developer", "H4-EAD"],
+            ["POOJITHA MITTINTI", "Application Lead", "GC"],
+            ["Priya Raniji", "QA Architect", "H4-EAD"],
+            ["Sai Jahnavi Vemula", "SDET III", "OPT"],
+            ["Gopichand karanam", "Java Microservices", "GC"],
+            ["Sai Venkata Naga Jitendra Sabarinadh Boddapati", "Performance Engineer", "H1B"],
+            ["Sasi kumar kuppu Swamy", "Technical Project Manager", "H1B"],
+            ["Sriram Venkata Varanasi", "Security Network Engineer", "H1B"],
+            ["Daxeshkumar Patel", "Agile Project Manager", "USC"],
+            ["Balaram Koneru", "System Integration lead", "OPT"],
+            ["Sri Sailaja Kodali", "IT Project Manager", "GC"],
+            ["Pushpendra Singh", "SQL Database Admin", "H1B"],
+            ["Shvetha Kalose", "E-commerce Product Lead", "H1B"],
+            ["Nitesh Tikka", "Technical Program Manager", "GC"],
+            ["Venkata Janaki Purnima Ambadipudi", "Integration Architect", "H1B"],
+            ["Srikanth Maganti", "Lead Product Owner", "H1B"],
+            ["Sushil Kumar Mahato", "Enterprise Program Lead", "GC"],
+            ["Latha Pravalika Munireddygari", "Support Engineer", "OPT"],
+            ["abhinav reddy koppula", "Strategic Program Lead", "OPT"],
+            ["Navya Gingampally", "Mulesoft Developer", "H4 EAD"],
+            ["PRIYANKA TERA", "Senior Mulesoft Developer", "H4 EAD"],
+            ["Janhavi Potdar", "QA Lead Specialist", "H1B"],
+            ["Gopichand Narani", "Strategy Consultant", "OPT"],
+            ["Priya Rajni", "Automation Engineer", "H4-EAD"],
+            ["Sai Rama Padma Harshita Duvvuri", "Sr. Business Analyst", "GC"],
+            ["Lakshmi Praneetha Gampa", "Product Analyst", "OPT"],
+            ["satish kumar kandala", "Software Quality Lead", "H1B"],
+            ["mithun kumar vuppu", "Senior Software Tester", "H4-EAD"],
+            ["Anuhya Tirumala Vinjamuri", "Process Analyst", "GC"],
+            ["Sanjana Shailesh Bongale", "Domain Expert", "OPT"],
+            ["Andrew Todd Harris", "SAP Solution Architect", "USC"]
+        ];
+
+        function render() {
+            const body = document.getElementById('tableBody');
+            body.innerHTML = rawData.map(c => `
+                <tr>
+                    <td class="name-cell">
+                        ${c[0]} <i class="fas fa-check-circle verified-badge" title="Verified Expert"></i>
+                    </td>
+                    <td class="job-title">${c[1]}</td>
+                    <td>
+                        <span class="visa-tag" style="background:#e0f2fe; color:#0369a1;">${c[2]}</span>
+                    </td>
+                    <td>
+                        <div class="locked-cell"><i class="fas fa-lock"></i> <span>Premium Only</span></div>
+                    </td>
+                    <td>
+                        <div class="locked-cell"><i class="fas fa-file-shield"></i> <span>Secure View</span></div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterTable() {
+            let val = document.getElementById('searchInput').value.toLowerCase();
+            let rows = document.getElementById('tableBody').rows;
+            for(let row of rows) {
+                row.style.display = row.innerText.toLowerCase().includes(val) ? "" : "none";
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>
