@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Candidate Dashboard</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+display:none;
+background:#f4f6f9;
+}
+
+/* HEADER */
+
+.header{
+background:#1e3c72;
+color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logout{
+background:red;
+border:none;
+color:white;
+padding:8px 15px;
+cursor:pointer;
+}
+
+/* JOB AREA */
+
+.container{
+padding:20px;
+}
+
+.job{
+background:white;
+padding:20px;
+margin-bottom:15px;
+border-radius:8px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.apply{
+background:#1e3c72;
+color:white;
+border:none;
+padding:8px 12px;
+cursor:pointer;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h2>Candidate Dashboard</h2>
+<button class="logout" id="logoutBtn">Logout</button>
+</div>
+
+<div class="container">
+<h3>Available Jobs</h3>
+<div id="jobs"></div>
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey:"YOUR_KEY",
+authDomain:"YOUR_DOMAIN",
+projectId:"sssvhunters-jobboard"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* 🔐 REAL PROTECTION */
+
+onAuthStateChanged(auth, async(user)=>{
+
+if(!user){
+location.href="auth.html";
+return;
+}
+
+const snap = await getDoc(doc(db,"users",user.uid));
+
+if(!snap.exists()){
+location.href="auth.html";
+return;
+}
+
+if(snap.data().role !== "candidate"){
+location.href="auth.html";
+}
+
+});
+
+</script>
+  
+
+/* ================= FIREBASE ================= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+
+const firebaseConfig={
+  apiKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+  authDomain: "sssvhunters-jobboard.firebaseapp.com",
+  projectId: "sssvhunters-jobboard",
+  storageBucket: "sssvhunters-jobboard.firebasestorage.app",
+  messagingSenderId: "724150870358",
+  appId: "1:724150870358:web:901c334ce94d530aefb6f7",
+  measurementId: "G-M1R2YQTW20"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+/* ================= SECURITY WALL ================= */
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+window.location.replace("auth.html");
+return;
+}
+
+/* user verified → show dashboard */
+document.body.style.display="block";
+
+/* load jobs */
+loadJobs();
+
+});
+
+/* ================= LOAD JOBS ================= */
+
+async function loadJobs(){
+
+const jobsDiv=document.getElementById("jobs");
+jobsDiv.innerHTML="Loading jobs...";
+
+const querySnapshot=
+await getDocs(collection(db,"jobs"));
+
+jobsDiv.innerHTML="";
+
+querySnapshot.forEach(doc=>{
+
+const job=doc.data();
+
+jobsDiv.innerHTML+=`
+<div class="job">
+<h3>${job.title}</h3>
+<p><b>Company:</b> ${job.company}</p>
+<p><b>Location:</b> ${job.location}</p>
+<p>${job.description}</p>
+
+<button class="apply">
+Apply Now
+</button>
+
+</div>
+`;
+
+});
+
+}
+
+/* ================= LOGOUT ================= */
+
+logoutBtn.onclick=()=>signOut(auth);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>SSSV Hunters | Secure Access</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:url("bg.jpg") center/cover no-repeat;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.card{
+background:rgba(255,255,255,.95);
+padding:35px;
+width:350px;
+border-radius:12px;
+}
+
+.tabs{
+display:flex;
+margin-bottom:15px;
+}
+
+.tabs button{
+flex:1;
+padding:10px;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
+
+.active{
+background:#1e3c72;
+color:white;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:8px 0;
+}
+
+button.main{
+width:100%;
+padding:12px;
+background:#1e3c72;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+.msg{
+text-align:center;
+margin-top:10px;
+color:red;
+}
+.success{color:green;}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>SSSV Hunters</h2>
+
+<div class="tabs">
+<button id="loginTab" class="active">Login</button>
+<button id="signupTab">Sign Up</button>
+</div>
+
+<input id="name" placeholder="Full Name" style="display:none">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button id="actionBtn" class="main">Secure Login</button>
+
+<p id="msg" class="msg"></p>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendEmailVerification,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+getDoc,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* FIREBASE CONFIG */
+const firebaseConfig={
+piKey: "AIzaSyCseBuz6XomVg_R1s3eLk0WBjvf2pGW8po",
+  authDomain: "sssvhunters-jobboard.firebaseapp.com",
+  projectId: "sssvhunters-jobboard",
+  storageBucket: "sssvhunters-jobboard.firebasestorage.app",
+  messagingSenderId: "724150870358",
+  appId: "1:724150870358:web:901c334ce94d530aefb6f7",
+  measurementId: "G-M1R2YQTW20"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+/* ===== DOM FIX ===== */
+
+const loginTab=document.getElementById("loginTab");
+const signupTab=document.getElementById("signupTab");
+const actionBtn=document.getElementById("actionBtn");
+
+const nameInput=document.getElementById("name");
+const emailInput=document.getElementById("email");
+const passwordInput=document.getElementById("password");
+const msg=document.getElementById("msg");
+
+let mode="login";
+
+/* TAB SWITCH */
+
+loginTab.onclick=()=>{
+mode="login";
+loginTab.classList.add("active");
+signupTab.classList.remove("active");
+nameInput.style.display="none";
+actionBtn.innerText="Secure Login";
+};
+
+signupTab.onclick=()=>{
+mode="signup";
+signupTab.classList.add("active");
+loginTab.classList.remove("active");
+nameInput.style.display="block";
+actionBtn.innerText="Create Account";
+};
+
+/* AUTH */
+
+actionBtn.onclick=async()=>{
+
+msg.innerText="";
+
+const email=emailInput.value.trim();
+const password=passwordInput.value.trim();
+const name=nameInput.value.trim();
+
+try{
+
+if(mode==="signup"){
+
+const userCred=
+await createUserWithEmailAndPassword(auth,email,password);
+
+await sendEmailVerification(userCred.user);
+
+await setDoc(doc(db,"users",userCred.user.uid),{
+name,
+email,
+role:"candidate",
+createdAt:serverTimestamp()
+});
+
+await signOut(auth);
+
+msg.className="msg success";
+msg.innerText="Verify email then login.";
+return;
+}
+
+/* LOGIN */
+
+const userCred=
+await signInWithEmailAndPassword(auth,email,password);
+
+if(!userCred.user.emailVerified){
+await signOut(auth);
+msg.innerText="Verify email first.";
+return;
+}
+
+const snap=
+await getDoc(doc(db,"users",userCred.user.uid));
+
+if(!snap.exists()){
+msg.innerText="No user record.";
+return;
+}
+
+location.href="candidate-dashboard.html";
+
+}catch(e){
+msg.innerText=e.message;
+}
+
+};
+
+</script>
+
+</body>
+</html>
