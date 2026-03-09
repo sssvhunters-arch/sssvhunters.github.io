@@ -3,151 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSSV HUNTERS | Premium US-India Talent</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>SSSV HUNTERS | The Pride of Indo-US Talent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-blue: #0046ff;
-            --deep-navy: #0a192f;
-            --accent-cyan: #00d4ff;
-            --glass-white: rgba(255, 255, 255, 0.8);
-            --border-color: #e2e8f0;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
-            --whatsapp-green: #25D366;
+            --absolute-saffron: #FF9933;
+            --absolute-white: #FFFFFF;
+            --absolute-green: #138808;
+            --royal-indigo: #1A237E;
+            --gold-leaf: #D4AF37;
+            --deep-maroon: #800000;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         body {
-            background-color: #ffffff;
-            color: var(--text-dark);
-            line-height: 1.6;
+            background-color: #fffaf0;
+            color: var(--royal-indigo);
             overflow-x: hidden;
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png"); /* Subtle textured paper */
         }
 
-        /* Interactive Water Sprinkle Canvas */
         #ripple-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Allows interaction with buttons */
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
             z-index: 9999;
         }
 
+        /* --- TRICOLOR TOP BAR --- */
+        .tricolor-border {
+            height: 8px;
+            width: 100%;
+            display: flex;
+            position: fixed;
+            top: 0;
+            z-index: 2000;
+        }
+        .tricolor-border div { flex: 1; }
+        .tc-saffron { background: var(--absolute-saffron); }
+        .tc-white { background: var(--absolute-white); }
+        .tc-green { background: var(--absolute-green); }
+
         /* --- PREMIUM NAVIGATION --- */
         nav {
-            padding: 1.2rem 8%;
+            padding: 1.5rem 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 2px solid var(--gold-leaf);
             position: sticky;
-            top: 0;
+            top: 8px;
             z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .nav-left { display: flex; align-items: center; gap: 20px; }
 
         .logo-img {
-            height: 45px;
-            width: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 70, 255, 0.1);
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+            border: 3px double var(--absolute-saffron);
+            background: white;
+            box-shadow: 0 0 15px rgba(255, 153, 51, 0.3);
         }
 
         .brand-name {
-            font-weight: 800;
-            font-size: 1.5rem;
+            font-family: 'Marcellus', serif;
+            font-weight: 900;
+            font-size: 2rem;
             text-decoration: none;
-            color: var(--deep-navy);
-            letter-spacing: -1px;
+            color: var(--royal-indigo);
+            letter-spacing: 1px;
         }
 
-        .brand-name span { color: var(--primary-blue); }
+        .brand-name span { color: var(--absolute-saffron); }
 
         .btn-contact-loco {
-            padding: 12px 24px;
-            background: var(--primary-blue);
-            color: white;
+            padding: 15px 35px;
+            background: var(--royal-indigo);
+            color: var(--absolute-white);
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 4px;
             font-weight: 700;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 70, 255, 0.2);
-            position: relative;
-            z-index: 1001;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-left: 5px solid var(--absolute-saffron);
+            transition: 0.3s ease;
         }
 
-        /* --- HERO SECTION --- */
+        .btn-contact-loco:hover {
+            background: var(--absolute-saffron);
+            color: var(--royal-indigo);
+            transform: translateY(-3px);
+        }
+
+        /* --- HERO & CARDS --- */
         .hero {
-            padding: 120px 8% 80px;
-            background: radial-gradient(circle at top right, #f0f7ff 0%, #ffffff 60%);
+            padding: 100px 8%;
             text-align: center;
+            position: relative;
         }
 
         .card-container {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
             flex-wrap: wrap;
             margin-top: 50px;
         }
 
         .sketch-card {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            padding: 50px 40px;
-            border-radius: 30px;
+            background: var(--absolute-white);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 0px 40px 0px 40px; /* Traditional architecture shape */
+            padding: 60px 45px;
             width: 100%;
-            max-width: 450px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: left;
+            max-width: 480px;
             position: relative;
-            overflow: hidden;
-            z-index: 2; /* Ensure cards are above the ripple if needed, but we handle it in JS */
+            box-shadow: 20px 20px 0px var(--absolute-saffron);
+            transition: all 0.4s ease;
+            text-align: center;
         }
 
         .sketch-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--primary-blue);
-            box-shadow: 0 30px 60px rgba(0, 70, 255, 0.1);
+            transform: translate(-10px, -10px);
+            box-shadow: 30px 30px 0px var(--absolute-green);
         }
 
-        /* Rest of the original CSS remains the same... */
-        .impact-banner { background: linear-gradient(90deg, #f8fafc, #eff6ff); padding: 15px 8%; text-align: center; font-size: 0.95rem; font-weight: 600; color: var(--primary-blue); border-bottom: 1px solid var(--border-color); }
-        .sketch-card h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 15px; color: var(--deep-navy); }
-        .sketch-card p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px; }
-        .action-btn { text-decoration: none; color: var(--primary-blue); font-weight: 800; display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem; }
-        .personalized-section { padding: 100px 8%; text-align: center; background: var(--deep-navy); color: white; border-radius: 60px 60px 0 0; }
-        .personalized-section h3 { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; }
-        .btn-whatsapp-support { background: var(--whatsapp-green); color: white; padding: 20px 40px; border-radius: 100px; text-decoration: none; font-weight: 800; display: inline-flex; align-items: center; gap: 15px; font-size: 1.1rem; transition: 0.3s; }
-        .intro-section { padding: 100px 8%; background: #ffffff; text-align: center; }
-        .intro-section h2 { font-size: 2.2rem; margin-bottom: 30px; position: relative; display: inline-block; }
-        .intro-text { max-width: 900px; margin: 0 auto; font-size: 1.2rem; color: var(--text-muted); line-height: 1.9; }
-        footer { background: #000; color: #fff; padding: 80px 8% 40px; text-align: center; }
-        .footer-logo { font-weight: 800; font-size: 2rem; display: block; margin-bottom: 15px; }
-        .footer-logo span { color: var(--primary-blue); }
-        .copyright { margin-top: 50px; font-size: 0.9rem; color: #555; border-top: 1px solid #222; padding-top: 30px; }
-        @media (max-width: 768px) { .sketch-card { padding: 30px; } .hero { padding: 60px 5%; } }
+        .sketch-card h2 {
+            font-family: 'Marcellus', serif;
+            font-size: 2.4rem;
+            color: var(--royal-indigo);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .sketch-card p {
+            font-size: 1.15rem;
+            color: #333;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        .action-btn {
+            text-decoration: none;
+            color: var(--absolute-white);
+            background: var(--absolute-green);
+            font-weight: 800;
+            padding: 15px 30px;
+            display: inline-block;
+            border-radius: 50px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(19, 136, 8, 0.3);
+        }
+
+        .action-btn:hover {
+            background: var(--royal-indigo);
+            transform: scale(1.1);
+        }
+
+        /* --- ABSOLUTE COLOR CTA --- */
+        .personalized-section {
+            padding: 100px 8%;
+            background: var(--absolute-saffron);
+            color: var(--royal-indigo);
+            text-align: center;
+            border-top: 10px solid var(--absolute-green);
+            border-bottom: 10px solid var(--royal-indigo);
+        }
+
+        .personalized-section h3 {
+            font-family: 'Marcellus', serif;
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .btn-whatsapp-support {
+            background: #25D366;
+            color: white;
+            padding: 22px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 900;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.4rem;
+            border: 4px solid var(--absolute-white);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        /* --- INTRO SECTION --- */
+        .intro-section {
+            padding: 120px 8%;
+            text-align: center;
+            background: white;
+            position: relative;
+        }
+
+        .intro-section h2 {
+            font-family: 'Marcellus', serif;
+            font-size: 3rem;
+            color: var(--royal-indigo);
+            margin-bottom: 50px;
+            background: linear-gradient(90deg, var(--absolute-saffron), var(--absolute-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-text {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 1.5rem;
+            color: #222;
+            line-height: 2;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--royal-indigo);
+            color: var(--absolute-white);
+            padding: 100px 8% 40px;
+            text-align: center;
+        }
+
+        .footer-logo { font-family: 'Marcellus', serif; font-size: 3rem; }
+        .footer-logo span { color: var(--absolute-saffron); }
+
+        .copyright {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--gold-leaf);
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .sketch-card { border-radius: 0 20px 0 20px; padding: 30px; }
+            .brand-name { font-size: 1.5rem; }
+            .personalized-section h3 { font-size: 2.2rem; }
+        }
     </style>
 </head>
 <body>
+    <div class="tricolor-border">
+        <div class="tc-saffron"></div>
+        <div class="tc-white"></div>
+        <div class="tc-green"></div>
+    </div>
+
     <canvas id="ripple-canvas"></canvas>
 
     <nav>
@@ -155,44 +273,38 @@
             <img src="bg.jpg" alt="Logo" class="logo-img">
             <a href="#" class="brand-name">SSSV<span>HUNTERS</span></a>
         </div>
-        <a href="https://wa.me/918448471857" class="btn-contact-loco">Connect Now !!!</a>
+        <a href="https://wa.me/918448471857" class="btn-contact-loco">Connect Now</a>
     </nav>
-
-    <div class="impact-banner">
-        <i class="fas fa-droplet" style="margin-right: 8px;"></i> Bridging Indian Talent & American Innovation. Seamless. Premium. Professional.
-    </div>
 
     <section class="hero">
         <div class="card-container">
             <div class="sketch-card no-ripple">
-                <h2>Looking for Project</h2>
-                <p>Check all Active Positions Now. Explore all openings now.</p>
-                <a href="jobs.html" class="action-btn">
-                    Apply Now <i class="fas fa-chevron-right"></i>
-                </a>
+                <i class="fas fa-dharmachakra" style="font-size: 3rem; color: var(--absolute-saffron); margin-bottom: 20px;"></i>
+                <h2>Find Projects</h2>
+                <p>Strategic placements within the American innovation landscape. Explore all active positions now.</p>
+                <a href="jobs.html" class="action-btn">Apply Now <i class="fas fa-chevron-right"></i></a>
             </div>
             <div class="sketch-card no-ripple">
-                <h2>Find Candidates</h2>
-                <p>Hire top-tier IT, Engineering, and Tech consultants vetted for American excellence.</p>
-                <a href="candidate.html" class="action-btn">
-                    Access candidate list <i class="fas fa-chevron-right"></i>
-                </a>
+                <i class="fas fa-chess-knight" style="font-size: 3rem; color: var(--absolute-green); margin-bottom: 20px;"></i>
+                <h2>Find a Candidate</h2>
+                <p>Access a premium roster of Indian technical experts vetted for high-tier US engineering needs.</p>
+                <a href="candidate.html" class="action-btn">View Talent <i class="fas fa-chevron-right"></i></a>
             </div>
         </div>
     </section>
 
     <section class="personalized-section">
-        <h3>Premium Personalized Service</h3>
-        <p style="margin-bottom: 40px; color: #a0aec0; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h3>Premium Personalized Support</h3>
+        <p style="margin-bottom: 40px; font-weight: 700; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 1.3rem;">
             Our talent hunters provide tailored recruitment architecture for specific global scaling needs.
         </p>
         <a href="https://wa.me/918448471857?text=Hello%20Team,%20I%20Would%20like%20to%20discuss%20and%20know%20more%20about%20personalized%20services%20!" class="btn-whatsapp-support">
-            <i class="fab fa-whatsapp" style="font-size: 1.8rem;"></i> Connect with Priority Support
+            <i class="fab fa-whatsapp"></i> Priority Support
         </a>
     </section>
 
     <section class="intro-section">
-        <h2>Our Introduction</h2>
+        <h2>Bharat's Bridge to the West</h2>
         <div class="intro-text">
             <strong>SSSV HUNTERS</strong> is an elite talent acquisition firm specializing in bridging the gap between high-caliber technical professionals in India and the booming tech landscape in the USA.
         </div>
@@ -201,20 +313,14 @@
     <footer>
         <span class="footer-logo">SSSV<span>HUNTERS</span></span>
         <div class="copyright">
-            &copy; 2026 SSSVHUNTERS. All Rights Reserved.
+            &copy; 2026 SSSV HUNTERS. ALL RIGHTS RESERVED.
         </div>
     </footer>
 
     <script>
-        /**
-         * LOCO AI - CUSTOM SPRINKLE EFFECT
-         * Restored your favorite effect with "Card Protection"
-         */
         const canvas = document.getElementById('ripple-canvas');
         const ctx = canvas.getContext('2d');
-        let width, height, ripples = [];
-        
-        // Get all cards that should NOT have ripples
+        let width, height, particles = [];
         const protectedCards = document.querySelectorAll('.no-ripple');
 
         function resize() {
@@ -225,8 +331,7 @@
         window.addEventListener('resize', resize);
         resize();
 
-        function createRipple(e) {
-            // Check if mouse is over a card
+        function createSparkle(e) {
             let isOverCard = false;
             protectedCards.forEach(card => {
                 const rect = card.getBoundingClientRect();
@@ -236,42 +341,45 @@
                 }
             });
 
-            // Only add ripple if NOT over a card
             if (!isOverCard) {
-                ripples.push({ 
-                    x: e.clientX, 
-                    y: e.clientY, 
-                    r: 2,           
-                    o: 0.6,         
-                    s: Math.random() * 2 + 1.5 
-                });
+                // Marigold Sparkle Effect
+                for(let i=0; i<2; i++) {
+                    particles.push({ 
+                        x: e.clientX, 
+                        y: e.clientY, 
+                        size: Math.random() * 5 + 2,
+                        o: 1,         
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: (Math.random() - 0.5) * 2,
+                        color: Math.random() > 0.5 ? '#FF9933' : '#FFD700'
+                    });
+                }
             }
         }
 
-        window.addEventListener('mousemove', createRipple);
-        window.addEventListener('mousedown', createRipple);
+        window.addEventListener('mousemove', createSparkle);
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            for (let i = 0; i < ripples.length; i++) {
-                let r = ripples[i];
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
                 ctx.beginPath();
-                ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(0, 70, 255, ${r.o})`; 
-                ctx.lineWidth = 2;
-                ctx.stroke();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.o;
+                ctx.fill();
                 
-                r.r += r.s;      
-                r.o -= 0.015;    
+                p.x += p.vx;
+                p.y += p.vy;
+                p.o -= 0.02;    
                 
-                if (r.o <= 0) {
-                    ripples.splice(i, 1);
+                if (p.o <= 0) {
+                    particles.splice(i, 1);
                     i--;
                 }
             }
             requestAnimationFrame(animate);
         }
-
         animate();
     </script>
 </body>
